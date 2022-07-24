@@ -1,0 +1,18 @@
+type Data {
+  label: String!
+}
+
+type Position {
+  x: Int!
+  y: Int!
+}
+
+type Node {
+  id: String!
+  data: Data!
+  position: Position!
+}
+
+type Query {
+  allNodes: [Node!]
+}

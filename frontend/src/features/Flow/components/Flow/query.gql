@@ -1,0 +1,12 @@
+query getAllNodes {
+  allNodes {
+    id
+    data {
+      label
+    }
+    position {
+      x
+      y
+    }
+  }
+}
