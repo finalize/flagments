@@ -1,12 +1,12 @@
 schema: http://localhost:4000/graphql
 documents: "src/**/*.gql"
 generates:
-  src/types.ts: # 型定義を逃がす
+  src/types/types.generated.ts: # 型定義を逃がす
     - typescript
   src/: # hooksとかはこっち
     preset: near-operation-file
     presetConfig:
-      baseTypesPath: types.ts # 上記のtypesをつなげる
+      baseTypesPath: types/types.generated.ts # 上記のtypesをつなげる
     plugins:
       - typescript-operations
       - typescript-react-apollo
