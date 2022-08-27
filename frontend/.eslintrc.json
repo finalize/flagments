@@ -6,8 +6,10 @@
     "plugin:react/recommended",
     "prettier"
   ],
+  "plugins": ["simple-import-sort"],
   "rules": {
-    "react/react-in-jsx-scope": "off"
-  },
-  "ignorePatterns": ["tailwind.config.js"]
+    "react/react-in-jsx-scope": "off",
+    "simple-import-sort/imports": "warn",
+    "simple-import-sort/exports": "warn"
+  }
 }
