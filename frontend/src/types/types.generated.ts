@@ -33,4 +33,17 @@ export type Position = {
 export type Query = {
   __typename?: 'Query';
   allNodes?: Maybe<Array<Node>>;
+  allUsers?: Maybe<User>;
+};
+
+
+export type QueryAllUsersArgs = {
+  id: Scalars['String'];
+};
+
+export type User = {
+  __typename?: 'User';
+  email?: Maybe<Scalars['String']>;
+  id?: Maybe<Scalars['ID']>;
+  password?: Maybe<Scalars['String']>;
 };
