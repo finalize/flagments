@@ -1,12 +1,21 @@
-import "styles/globals.css"
-import type { AppProps } from "next/app"
+import "@/styles/globals.css"
+
 import { ApolloProvider } from "@apollo/client"
-import client from "libs/apollo-client"
+import { ChakraProvider } from "@chakra-ui/react"
+import type { AppProps } from "next/app"
+import { ReactFlowProvider } from "react-flow-renderer"
+
+import { client } from "@/libs/apollo-client"
+import { theme } from "@/styles/theme"
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
     <ApolloProvider client={client}>
-      <Component {...pageProps} />
+      <ChakraProvider theme={theme}>
+        <ReactFlowProvider>
+          <Component {...pageProps} />
+        </ReactFlowProvider>
+      </ChakraProvider>
     </ApolloProvider>
   )
 }

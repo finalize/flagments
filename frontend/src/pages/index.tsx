@@ -1,22 +1,27 @@
+import { Button, Flex } from "@chakra-ui/react"
 import type { NextPage } from "next"
 import Head from "next/head"
-import { Main } from "layouts/Main"
-import { Flow } from "features/Flow/components/Flow"
+import Link from "next/link"
+
+import { Main } from "@/layouts/Main"
 
 const Home: NextPage = () => {
   return (
-    <div>
+    <>
       <Head>
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-
       <Main>
-        <main className="flex h-screen flex-col items-center justify-center gap-y-4">
-          <Flow />
-        </main>
+        <Flex h="100vh" justifyContent="center" alignItems="center">
+          <Link href="/playground">
+            <a>
+              <Button colorScheme="blue">Play</Button>
+            </a>
+          </Link>
+        </Flex>
       </Main>
-    </div>
+    </>
   )
 }
 
