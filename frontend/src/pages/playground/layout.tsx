@@ -4,7 +4,7 @@ import { FC, ReactNode } from "react"
 
 import { Header } from "@/components/Header"
 import { Menu } from "@/components/Menu"
-import { DraggableNodeList } from "@/features/DraggableNode"
+import { DraggableNodeListBar } from "@/features/DraggableNodeListBar"
 import { SettingsBar } from "@/features/SettingsBar"
 import { templateVar } from "@/hooks/apollo/useTemplateVar"
 
@@ -24,7 +24,7 @@ export const Layout: FC<Props> = ({ children }) => {
     <main>
       <Grid h="100vh" {...rest}>
         {header.isVisible && <Header />}
-        {leftSidebar.isVisible && <DraggableNodeList />}
+        {leftSidebar.isVisible && <DraggableNodeListBar />}
         {children}
         {rightSidebar.isVisible && (
           <SettingsBar isVisibleHeader={header.isVisible} />
