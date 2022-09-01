@@ -11,7 +11,7 @@ const Home: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <main className="flex h-screen flex-col items-center bg-zinc-500">
+      <main>
         <SignupForm />
       </main>
     </div>

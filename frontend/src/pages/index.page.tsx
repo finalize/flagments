@@ -3,7 +3,7 @@ import type { NextPage } from "next"
 import Head from "next/head"
 import Link from "next/link"
 
-import { Main } from "@/layouts/Main"
+import { Layout } from "./layout"
 
 const Home: NextPage = () => {
   return (
@@ -12,7 +12,8 @@ const Home: NextPage = () => {
         <title>Create Next App</title>
         <link rel="icon" href="/favicon.ico" />
       </Head>
-      <Main>
+
+      <Layout>
         <Flex h="100vh" justifyContent="center" alignItems="center">
           <Link href="/playground">
             <a>
@@ -20,7 +21,7 @@ const Home: NextPage = () => {
             </a>
           </Link>
         </Flex>
-      </Main>
+      </Layout>
     </>
   )
 }
