@@ -22,8 +22,7 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-flow-renderer": "^10.3.8",
-    "react-hook-form": "^7.33.1",
-    "uuid": "^8.3.2"
+    "react-hook-form": "^7.33.1"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^2.6.3",
@@ -36,7 +35,6 @@
     "@types/node": "18.0.0",
     "@types/react": "18.0.14",
     "@types/react-dom": "18.0.5",
-    "@types/uuid": "^8.3.4",
     "@typescript-eslint/eslint-plugin": "^5.30.0",
     "autoprefixer": "^10.4.7",
     "eslint": "8.18.0",
