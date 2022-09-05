@@ -1,5 +1,5 @@
 import { ApolloServer } from "apollo-server"
-import { resolvers, typeDefs } from "./graphql"
+import { resolvers, typeDefs } from "./gql"
 
 export async function startApolloServer() {
   const server = new ApolloServer({
