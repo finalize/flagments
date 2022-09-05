@@ -1,7 +1,7 @@
 import type { NextPage } from "next"
 import Head from "next/head"
 
-import { FlowEdit } from "@/features/Flow"
+import { Flow } from "@/features/Flow"
 
 import { Layout } from "./layout"
 
@@ -14,7 +14,7 @@ const Playground: NextPage = () => {
       </Head>
 
       <Layout>
-        <FlowEdit />
+        <Flow />
       </Layout>
     </>
   )
