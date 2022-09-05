@@ -18,19 +18,19 @@ export const getHandle = (value: string) => {
       }
     if (t === "bottom")
       return {
-        id: "b",
+        id: "bottom",
         type: "source" as HandleType,
         position: Position.Bottom,
       }
     if (t === "right")
       return {
-        id: "c",
+        id: "right",
         type: "source" as HandleType,
         position: Position.Right,
       }
     if (t === "left")
       return {
-        id: "d",
+        id: "left",
         type: "source" as HandleType,
         position: Position.Left,
       }
