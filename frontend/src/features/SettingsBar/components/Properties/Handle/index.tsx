@@ -1,0 +1,88 @@
+import { Flex, Switch, Text } from "@chakra-ui/react"
+import { FC } from "react"
+
+import { selectedNodeVar } from "@/hooks/apollo"
+import { CustomNode } from "@/types"
+
+import { Container } from "../Container"
+
+type Props = {
+  selectedNode: CustomNode
+}
+type Args = {
+  checked: boolean
+  position: string
+}
+type HandleSwitchPosition = (args: Args) => void
+
+export const Handle: FC<Props> = ({ selectedNode }) => {
+  const positions = selectedNode.data.type?.split("_") ?? []
+
+  const handleSwitchPosition: HandleSwitchPosition = ({
+    checked,
+    position,
+  }) => {
+    const newHandleType = checked
+      ? positions.indexOf(position) === -1
+        ? selectedNode.data.type === ""
+          ? position
+          : `${selectedNode.data.type}_${position}`
+        : selectedNode.data.type
+      : positions.filter((p) => p !== position).join("_")
+
+    selectedNodeVar({
+      ...selectedNode,
+      data: { ...selectedNode.data, type: newHandleType },
+    })
+  }
+
+  return (
+    <Container title="ハンドル">
+      <Flex alignItems="center" justifyContent="space-between">
+        <Text fontSize="sm">上ハンドル</Text>
+        <Switch
+          isChecked={positions.some((p) => p === "top")}
+          onChange={(e) =>
+            handleSwitchPosition({ checked: e.target.checked, position: "top" })
+          }
+        />
+      </Flex>
+      <Flex mt={4} alignItems="center" justifyContent="space-between">
+        <Text fontSize="sm">下ハンドル</Text>
+        <Switch
+          isChecked={positions.some((p) => p === "bottom")}
+          onChange={(e) =>
+            handleSwitchPosition({
+              checked: e.target.checked,
+              position: "bottom",
+            })
+          }
+        />
+      </Flex>
+      <Flex mt={4} alignItems="center" justifyContent="space-between">
+        <Text fontSize="sm">左ハンドル</Text>
+        <Switch
+          isChecked={positions.some((p) => p === "left")}
+          onChange={(e) =>
+            handleSwitchPosition({
+              checked: e.target.checked,
+              position: "left",
+            })
+          }
+        />
+      </Flex>
+      <Flex mt={4} alignItems="center" justifyContent="space-between">
+        <Text fontSize="sm">右ハンドル</Text>
+        <Switch
+          isChecked={positions.some((p) => p === "right")}
+          onChange={(e) =>
+            handleSwitchPosition({
+              checked: e.target.checked,
+              position: "right",
+            })
+          }
+        />
+      </Flex>
+    </Container>
+  )
+}

@@ -1,18 +1,12 @@
-import { Box, Flex } from "@chakra-ui/react"
+import { Flex } from "@chakra-ui/react"
+import { FC } from "react"
 
 import { DefaultShape } from "@/components/Shapes/Default"
 import { NODE_TYPES } from "@/constants"
 
-export const DraggableNodeListBar = () => {
+export const ShapeTab: FC = () => {
   return (
-    <Box
-      gridArea="leftSidebar"
-      bg="white"
-      zIndex={20}
-      borderColor="gray.200"
-      borderRightWidth={1}
-      overflowY="scroll"
-    >
+    <>
       {NODE_TYPES.map((type) => (
         <Flex
           key={type}
@@ -25,6 +19,6 @@ export const DraggableNodeListBar = () => {
           <DefaultShape type={type} />
         </Flex>
       ))}
-    </Box>
+    </>
   )
 }
