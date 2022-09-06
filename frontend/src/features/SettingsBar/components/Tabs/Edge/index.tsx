@@ -1,6 +1,6 @@
 import { useReactiveVar } from "@apollo/client"
-import { Box, Button, Flex, Select, Text } from "@chakra-ui/react"
-import { ChangeEventHandler, FC, useCallback, useEffect, useMemo } from "react"
+import { Box, Flex, Select, Text } from "@chakra-ui/react"
+import { ChangeEventHandler, FC, useCallback, useMemo } from "react"
 import { ReactFlowInstance } from "react-flow-renderer"
 
 import { selectedEdgeVar } from "@/hooks/apollo"
@@ -80,25 +80,6 @@ export const EdgeTab: FC<Props> = ({ instance, selectedNode }) => {
     },
     [instance, selectedEdge]
   )
-  const onClick = () => null
-
-  useEffect(() => {
-    if (selectedNode === undefined) return
-    instance.setEdges((eds) =>
-      eds.map((v) => {
-        return {
-          id: v.id,
-          source: v.source,
-          sourceHandle: v.sourceHandle,
-          target: v.target,
-          targetHandle: v.targetHandle,
-          type: v.type,
-          animated: v.animated ?? false,
-        }
-      })
-    )
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [selectedNode])
 
   return (
     <>
@@ -141,11 +122,6 @@ export const EdgeTab: FC<Props> = ({ instance, selectedNode }) => {
             </Select>
           </Flex>
         )}
-      </Box>
-      <Box p={4} px={4}>
-        <Button variant="outline" color="blue.400" w="full" onClick={onClick}>
-          Update
-        </Button>
       </Box>
     </>
   )
