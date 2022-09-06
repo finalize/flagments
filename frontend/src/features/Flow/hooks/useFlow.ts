@@ -3,9 +3,7 @@ import { addEdge, OnConnect, useReactFlow } from "react-flow-renderer"
 
 import { uuid } from "@/functions/uuid"
 import { selectedEdgeVar, selectedNodeVar } from "@/hooks/apollo"
-
-import { useEdge } from "./useEdge"
-import { useNode } from "./useNode"
+import { useEdge, useNode } from "@/hooks/flow"
 
 type Args = {
   reactFlowWrapper: React.RefObject<HTMLDivElement>
@@ -17,7 +15,12 @@ export const useFlow = ({ reactFlowWrapper, setNodes, setEdges }: Args) => {
   const instance = useReactFlow()
 
   const onConnect: OnConnect = useCallback(
-    (params) => setEdges((eds) => addEdge(params, eds)),
+    (params) =>
+      setEdges((eds) => {
+        const edges = addEdge({ ...params }, eds)
+        selectedEdgeVar(edges.at(-1))
+        return edges
+      }),
     [setEdges]
   )
 

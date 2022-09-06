@@ -30,10 +30,11 @@ export const useNode = () => {
     [setNodes]
   )
 
-  useEffect(
-    () => handleSelectNode(selectedNode),
-    [selectedNode, handleSelectNode]
-  )
+  useEffect(() => {
+    console.log(selectedNode, "?")
+
+    handleSelectNode(selectedNode)
+  }, [selectedNode, handleSelectNode])
 
   return {
     nodes,

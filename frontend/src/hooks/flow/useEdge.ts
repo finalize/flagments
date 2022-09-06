@@ -16,6 +16,8 @@ export const useEdge = () => {
   const onEdgeClick: OnEdgeClick = (_, v) => selectedEdgeVar(v)
 
   useEffect(() => {
+    if (edges.length === 0) return
+
     if (selectedEdge) {
       setEdges((edgs) =>
         edgs.map((edg) =>
@@ -24,6 +26,7 @@ export const useEdge = () => {
                 ...edg,
                 selected: true,
                 animated: true,
+                zIndex: edg.zIndex ? edg.zIndex + 1 : 1,
                 style: { stroke: Colors.blue[400] },
               }
             : { ...edg, selected: false, animated: false, style: undefined }
@@ -39,7 +42,8 @@ export const useEdge = () => {
         }))
       )
     }
-  }, [setEdges, selectedEdge])
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [selectedEdge])
 
   return {
     edges,
