@@ -1,4 +1,3 @@
-import { useReactiveVar } from "@apollo/client"
 import {
   Tab,
   TabList,
@@ -6,17 +5,11 @@ import {
   TabPanels,
   Tabs as ChakraTabs,
 } from "@chakra-ui/react"
-import { useReactFlow } from "react-flow-renderer"
-
-import { selectedNodeVar } from "@/hooks/apollo"
 
 import { LayerTab } from "./Layer"
 import { ShapeTab } from "./Shape"
 
 export const Tabs = () => {
-  const selectedNode = useReactiveVar(selectedNodeVar)
-  const instance = useReactFlow()
-
   return (
     <ChakraTabs isFitted>
       <TabList>
@@ -25,7 +18,7 @@ export const Tabs = () => {
       </TabList>
       <TabPanels>
         <TabPanel p={0}>
-          <LayerTab instance={instance} selectedNode={selectedNode} />
+          <LayerTab />
         </TabPanel>
         <TabPanel p={0}>
           <ShapeTab />

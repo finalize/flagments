@@ -10,8 +10,9 @@ import ReactFlow, {
 } from "react-flow-renderer"
 
 import { CustomEdge, CustomNode } from "@/components"
+import { useEdge, useNode } from "@/hooks/flow"
 
-import { useEdge, useFlow, useNode } from "./hooks"
+import { useFlow } from "./hooks"
 
 const nodeTypes = {
   custom: CustomNode,
