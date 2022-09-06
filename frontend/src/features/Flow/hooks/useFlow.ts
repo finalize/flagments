@@ -18,7 +18,8 @@ export const useFlow = ({ reactFlowWrapper, setNodes, setEdges }: Args) => {
     (params) =>
       setEdges((eds) => {
         const edges = addEdge({ ...params }, eds)
-        selectedEdgeVar(edges.at(-1))
+        const edge = selectedEdgeVar(edges.at(-1))
+        selectedEdgeVar(edge)
         return edges
       }),
     [setEdges]
