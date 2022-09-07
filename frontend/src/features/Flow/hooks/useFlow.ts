@@ -3,7 +3,8 @@ import { addEdge, OnConnect, useReactFlow } from "react-flow-renderer"
 
 import { uuid } from "@/functions/uuid"
 import { selectedEdgeVar, selectedNodeVar } from "@/hooks/apollo"
-import { useEdge, useNode } from "@/hooks/flow"
+
+import { useEdge, useNode } from "."
 
 type Args = {
   reactFlowWrapper: React.RefObject<HTMLDivElement>
