@@ -29,6 +29,8 @@ export const LayerTab = () => {
     selectedEdgeVar(edge)
   }, [])
 
+  console.log({ nodes, edges })
+
   return (
     <Flex flexDirection="column">
       <Box py={2} borderColor="gray.200" borderBottomWidth={1}>
