@@ -2,8 +2,12 @@ import { Box, Button } from "@chakra-ui/react"
 import { ChangeEventHandler, FC } from "react"
 import { ReactFlowInstance } from "react-flow-renderer"
 
-import { Handle, Label } from "@/features/SettingsBar/components/Properties"
+import {
+  Handle,
+  Label,
+} from "@/features/SecondarySidebar/components/Properties"
 import { selectedNodeVar } from "@/hooks/apollo"
+import { useNode } from "@/hooks/flow"
 import { CustomNode } from "@/types"
 
 type Props = {
@@ -12,16 +16,12 @@ type Props = {
 }
 
 export const NodeTab: FC<Props> = ({ instance, selectedNode }) => {
+  const { handleChangeLabel } = useNode()
+
   const onChangeLabel: ChangeEventHandler<HTMLTextAreaElement> = ({
     target: { value: label },
   }) => {
-    selectedNodeVar({
-      ...selectedNode,
-      data: {
-        ...selectedNode.data,
-        label,
-      },
-    })
+    handleChangeLabel(label)
   }
   const onDeleteNode = () => {
     instance.setNodes((nds) => nds.filter((n) => n.id !== selectedNode.id))

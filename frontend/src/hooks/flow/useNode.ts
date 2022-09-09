@@ -1,43 +1,39 @@
 import { useReactiveVar } from "@apollo/client"
-import { useCallback, useEffect } from "react"
-import { NodeDragHandler, useNodesState } from "react-flow-renderer"
+import { useCallback } from "react"
+import { useReactFlow } from "react-flow-renderer"
 
 import { selectedNodeVar } from "@/hooks/apollo"
-import { SelectedNode } from "@/hooks/apollo/useSelectNodeVar"
-import { NodeData } from "@/types"
 
 export const useNode = () => {
   const selectedNode = useReactiveVar(selectedNodeVar)
 
-  const [nodes, setNodes, onNodesChange] = useNodesState<NodeData>([])
+  const { setNodes } = useReactFlow()
 
-  const onNodeDragStop: NodeDragHandler = useCallback((_, node) => {
-    selectedNodeVar({ ...node, selected: true })
-  }, [])
+  const handleChangeLabel = useCallback(
+    (label: string) => {
+      if (selectedNode === undefined) return
 
-  const handleSelectNode = useCallback(
-    (selectedNode: SelectedNode) => {
-      if (selectedNode) {
-        setNodes((nds) =>
-          nds.map((nd) =>
-            nd.id === selectedNode.id
-              ? { ...nd, selected: true }
-              : { ...nd, selected: false }
-          )
-        )
-      }
+      setNodes((nds) =>
+        nds.map((node) => {
+          if (node.id === selectedNode.id) {
+            return {
+              ...node,
+              data: { ...selectedNode.data, label },
+            }
+          }
+
+          return node
+        })
+      )
+      selectedNodeVar({
+        ...selectedNode,
+        data: { ...selectedNode.data, label },
+      })
     },
-    [setNodes]
+    [setNodes, selectedNode]
   )
 
-  useEffect(() => {
-    handleSelectNode(selectedNode)
-  }, [selectedNode, handleSelectNode])
-
   return {
-    nodes,
-    setNodes,
-    onNodesChange,
-    onNodeDragStop,
+    handleChangeLabel,
   }
 }

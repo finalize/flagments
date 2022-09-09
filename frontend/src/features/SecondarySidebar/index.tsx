@@ -7,7 +7,7 @@ type Props = {
   isVisibleHeader: boolean
 }
 
-export const SettingsBar: FC<Props> = ({ isVisibleHeader }) => (
+export const SecondarySidebar: FC<Props> = ({ isVisibleHeader }) => (
   <Box
     gridArea="rightSidebar"
     bg="white"

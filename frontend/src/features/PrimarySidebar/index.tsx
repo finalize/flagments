@@ -2,7 +2,7 @@ import { Box } from "@chakra-ui/react"
 
 import { Tabs } from "./components/Tabs"
 
-export const LayerBar = () => {
+export const PrimarySidebar = () => {
   return (
     <Box
       gridArea="leftSidebar"

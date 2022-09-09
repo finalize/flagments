@@ -5,11 +5,14 @@ import {
   TabPanels,
   Tabs as ChakraTabs,
 } from "@chakra-ui/react"
+import { useReactFlow } from "react-flow-renderer"
 
 import { LayerTab } from "./Layer"
 import { ShapeTab } from "./Shape"
 
 export const Tabs = () => {
+  const instance = useReactFlow()
+
   return (
     <ChakraTabs isFitted>
       <TabList>
@@ -18,7 +21,7 @@ export const Tabs = () => {
       </TabList>
       <TabPanels>
         <TabPanel p={0}>
-          <LayerTab />
+          <LayerTab instance={instance} />
         </TabPanel>
         <TabPanel p={0}>
           <ShapeTab />

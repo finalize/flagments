@@ -10,8 +10,8 @@ import ReactFlow, {
 } from "react-flow-renderer"
 
 import { CustomEdge, CustomNode } from "@/components"
-import { useEdge, useNode } from "@/hooks/flow"
 
+import { useEdge, useNode } from "./hooks"
 import { useFlow } from "./hooks"
 
 const nodeTypes = {
@@ -25,12 +25,12 @@ const edgeTypes = {
 export const Flow: FC = () => {
   const reactFlowWrapper = useRef<HTMLDivElement>(null)
 
-  const { nodes, setNodes, onNodesChange, onNodeDragStop } = useNode()
+  const { nodes, onNodesChange, onNodeDragStop, handleSelectNode } = useNode()
   const { edges, setEdges, onEdgesChange, onEdgeClick } = useEdge()
   const { onConnect, onDrop, onDragOver, onPaneClick } = useFlow({
     reactFlowWrapper,
-    setNodes,
     setEdges,
+    handleSelectNode,
   })
 
   const [showMinimap, setShowMinimap] = useState(true)
