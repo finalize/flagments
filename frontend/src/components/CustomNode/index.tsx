@@ -4,6 +4,7 @@ import { Handle, useUpdateNodeInternals } from "react-flow-renderer"
 
 import { getHandle } from "@/functions/getNodeTypes"
 import { selectedNodeVar } from "@/hooks/apollo"
+import { Colors } from "@/styles/theme"
 import { CustomNodeProps } from "@/types"
 
 const Component = (props: CustomNodeProps) => {
@@ -54,7 +55,11 @@ const Component = (props: CustomNodeProps) => {
           id={id}
           type={type}
           position={position}
-          style={{ background: "#555", width: "8px", height: "8px" }}
+          style={{
+            background: Colors.flow.handle.backgounrd,
+            width: "8px",
+            height: "8px",
+          }}
           isConnectable
         />
       ))}
@@ -62,6 +67,4 @@ const Component = (props: CustomNodeProps) => {
   )
 }
 
-const CustomNode = memo(Component)
-
-export { CustomNode }
+export const CustomNode = memo(Component)
