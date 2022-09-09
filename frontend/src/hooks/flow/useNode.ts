@@ -9,5 +9,31 @@ export const useNode = () => {
 
   const { setNodes } = useReactFlow()
 
-  return {}
+  const handleChangeLabel = useCallback(
+    (label: string) => {
+      if (selectedNode === undefined) return
+
+      setNodes((nds) =>
+        nds.map((node) => {
+          if (node.id === selectedNode.id) {
+            return {
+              ...node,
+              data: { ...selectedNode.data, label },
+            }
+          }
+
+          return node
+        })
+      )
+      selectedNodeVar({
+        ...selectedNode,
+        data: { ...selectedNode.data, label },
+      })
+    },
+    [setNodes, selectedNode]
+  )
+
+  return {
+    handleChangeLabel,
+  }
 }
