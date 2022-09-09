@@ -8,11 +8,15 @@ import { useEdge, useNode } from "."
 
 type Args = {
   reactFlowWrapper: React.RefObject<HTMLDivElement>
-  setNodes: ReturnType<typeof useNode>["setNodes"]
   setEdges: ReturnType<typeof useEdge>["setEdges"]
+  handleSelectNode: ReturnType<typeof useNode>["handleSelectNode"]
 }
 
-export const useFlow = ({ reactFlowWrapper, setNodes, setEdges }: Args) => {
+export const useFlow = ({
+  reactFlowWrapper,
+  setEdges,
+  handleSelectNode,
+}: Args) => {
   const instance = useReactFlow()
 
   const onConnect: OnConnect = useCallback(
@@ -65,10 +69,9 @@ export const useFlow = ({ reactFlowWrapper, setNodes, setEdges }: Args) => {
         data: { type, label: "" },
       }
 
-      setNodes((nds) => [...nds, node])
-      selectedNodeVar(node)
+      handleSelectNode(node)
     },
-    [setNodes, instance, reactFlowWrapper]
+    [instance, reactFlowWrapper, handleSelectNode]
   )
 
   return {

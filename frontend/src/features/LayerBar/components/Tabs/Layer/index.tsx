@@ -1,24 +1,23 @@
 import { useReactiveVar } from "@apollo/client"
 import { Box, Flex, Text } from "@chakra-ui/react"
-import { useCallback, useMemo } from "react"
-import { Edge, Node } from "react-flow-renderer"
-import { useReactFlow } from "react-flow-renderer"
+import { FC, useCallback, useMemo } from "react"
+import { Edge, Node, ReactFlowInstance } from "react-flow-renderer"
 
 import { selectedEdgeVar, selectedNodeVar } from "@/hooks/apollo"
 import { Colors } from "@/styles/theme"
 
-export const LayerTab = () => {
-  const instance = useReactFlow()
+type Props = {
+  instance: ReactFlowInstance
+}
 
+export const LayerTab: FC<Props> = ({ instance }) => {
   const selectedNode = useReactiveVar(selectedNodeVar)
   const selectedEdge = useReactiveVar(selectedEdgeVar)
 
-  const nodes = useMemo(() => instance.getNodes(), [instance])
-  const edges = useMemo(() => {
-    const edgs = instance.getEdges()
-    if (selectedEdge === undefined) return edgs
-    return [selectedEdge, ...edgs]
-  }, [instance, selectedEdge])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const nodes = useMemo(() => instance.getNodes(), [instance, selectedNode])
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const edges = useMemo(() => instance.getEdges(), [instance, selectedEdge])
 
   const onClickNode = useCallback((node: Node) => {
     selectedNodeVar(node)
@@ -28,8 +27,6 @@ export const LayerTab = () => {
   const onClickEdge = useCallback((edge: Edge) => {
     selectedEdgeVar(edge)
   }, [])
-
-  console.log({ nodes, edges })
 
   return (
     <Flex flexDirection="column">
