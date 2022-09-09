@@ -15,7 +15,13 @@ export const LayerTab: FC<Props> = ({ instance }) => {
   const selectedEdge = useReactiveVar(selectedEdgeVar)
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const nodes = useMemo(() => instance.getNodes(), [instance, selectedNode])
+  const nodes = useMemo(
+    () =>
+      instance
+        .getNodes()
+        .map((node) => (node.id === selectedNode?.id ? selectedNode : node)),
+    [instance, selectedNode]
+  )
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const edges = useMemo(() => instance.getEdges(), [instance, selectedEdge])
 
