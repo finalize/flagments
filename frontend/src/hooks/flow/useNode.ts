@@ -33,7 +33,10 @@ export const useNode = () => {
     [setNodes, selectedNode]
   )
 
+  const onChangeHandlePosition = () => null
+
   return {
     handleChangeLabel,
+    onChangeHandlePosition,
   }
 }
