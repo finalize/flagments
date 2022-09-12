@@ -1,7 +1,7 @@
 import { Flex, Switch, Text } from "@chakra-ui/react"
 import { FC } from "react"
 
-import { selectedNodeVar } from "@/hooks/apollo"
+import { useNode } from "@/hooks/flow"
 import { CustomNode } from "@/types"
 
 import { Container } from "../Container"
@@ -16,24 +16,15 @@ type Args = {
 type HandleSwitchPosition = (args: Args) => void
 
 export const Handle: FC<Props> = ({ selectedNode }) => {
+  const { onChangeHandlePosition } = useNode()
+
   const positions = selectedNode.data.type?.split("_") ?? []
 
   const handleSwitchPosition: HandleSwitchPosition = ({
     checked,
     position,
   }) => {
-    const newHandleType = checked
-      ? positions.indexOf(position) === -1
-        ? selectedNode.data.type === ""
-          ? position
-          : `${selectedNode.data.type}_${position}`
-        : selectedNode.data.type
-      : positions.filter((p) => p !== position).join("_")
-
-    selectedNodeVar({
-      ...selectedNode,
-      data: { ...selectedNode.data, type: newHandleType },
-    })
+    onChangeHandlePosition({ checked, position, positions })
   }
 
   return (
