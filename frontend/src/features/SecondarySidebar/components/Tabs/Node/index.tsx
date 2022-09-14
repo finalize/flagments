@@ -16,12 +16,12 @@ type Props = {
 }
 
 export const NodeTab: FC<Props> = ({ instance, selectedNode }) => {
-  const { handleChangeLabel } = useNode()
+  const { onChangeLabel } = useNode()
 
-  const onChangeLabel: ChangeEventHandler<HTMLTextAreaElement> = ({
+  const onChange: ChangeEventHandler<HTMLTextAreaElement> = ({
     target: { value: label },
   }) => {
-    handleChangeLabel(label)
+    onChangeLabel(label)
   }
   const onDeleteNode = () => {
     instance.setNodes((nds) => nds.filter((n) => n.id !== selectedNode.id))
@@ -36,7 +36,7 @@ export const NodeTab: FC<Props> = ({ instance, selectedNode }) => {
 
   return (
     <>
-      <Label value={selectedNode?.data?.label} onChange={onChangeLabel} />
+      <Label value={selectedNode?.data?.label} onChange={onChange} />
       <Handle selectedNode={selectedNode} />
       <Box p={4} px={4}>
         <Button variant="ghost" color="red.500" w="full" onClick={onDeleteNode}>

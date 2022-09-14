@@ -15,7 +15,7 @@ export const useNode = () => {
 
   const { setNodes } = useReactFlow()
 
-  const handleChangeLabel = useCallback(
+  const onChangeLabel = useCallback(
     (label: string) => {
       if (selectedNode === undefined) return
 
@@ -71,7 +71,7 @@ export const useNode = () => {
   )
 
   return {
-    handleChangeLabel,
+    onChangeLabel,
     onChangeHandlePosition,
   }
 }
