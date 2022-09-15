@@ -70,8 +70,16 @@ export const useNode = () => {
     [selectedNode, setNodes]
   )
 
+  const onDeleteNode = useCallback(() => {
+    if (selectedNode === undefined) return
+
+    setNodes((nds) => nds.filter((n) => n.id !== selectedNode.id))
+    selectedNodeVar(undefined)
+  }, [setNodes, selectedNode])
+
   return {
     onChangeLabel,
     onChangeHandlePosition,
+    onDeleteNode,
   }
 }
