@@ -1,22 +1,25 @@
-export type Template = {
-  [key: string]: {
-    components: {
-      header: {
-        isVisible: boolean
-      }
-      leftSidebar: {
-        isVisible: boolean
-      }
-      rightSidebar: {
-        isVisible: boolean
-      }
+export type Content = {
+  components: {
+    header: {
+      isVisible: boolean
     }
-    gridTemplateRows: string
-    gridTemplateColumns: string
-    templateAreas: string
-    pattern: string[]
+    leftSidebar: {
+      isVisible: boolean
+    }
+    rightSidebar: {
+      isVisible: boolean
+    }
   }
+  gridTemplateRows: string
+  gridTemplateColumns: string
+  templateAreas: string
+  pattern: string[]
 }
+
+export type Template = {
+  [key: string]: Content
+}
+
 export const Template: Template = {
   a: {
     components: {

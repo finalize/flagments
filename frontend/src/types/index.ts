@@ -6,7 +6,9 @@ export type NodeData = {
   label: string
   targetHandle?: Position
 }
+
 export type CustomNode = Node<NodeData>
+
 export type CustomNodeProps = NodeProps<NodeData>
 
 export type PickedUseDisclosureReturn = Pick<
