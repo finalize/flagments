@@ -1,8 +1,6 @@
 import type { NextPage } from "next"
 import Head from "next/head"
 
-import { Flow } from "@/features/Flow"
-
 import { Layout } from "./layout"
 
 const Playground: NextPage = () => {
@@ -13,9 +11,7 @@ const Playground: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
       </Head>
 
-      <Layout>
-        <Flow />
-      </Layout>
+      <Layout />
     </>
   )
 }
