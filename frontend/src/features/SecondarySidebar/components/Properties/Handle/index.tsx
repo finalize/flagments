@@ -7,7 +7,7 @@ import { CustomNode } from "@/types"
 import { Container } from "../Container"
 
 type Props = {
-  selectedNode: CustomNode
+  targetNode: CustomNode
 }
 type Args = {
   checked: boolean
@@ -15,10 +15,10 @@ type Args = {
 }
 type HandleSwitchPosition = (args: Args) => void
 
-export const Handle: FC<Props> = ({ selectedNode }) => {
+export const Handle: FC<Props> = ({ targetNode }) => {
   const { onChangeHandlePosition } = useNode()
 
-  const positions = selectedNode.data.type?.split("_") ?? []
+  const positions = targetNode.data.type?.split("_") ?? []
 
   const handleSwitchPosition: HandleSwitchPosition = ({
     checked,

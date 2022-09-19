@@ -1,6 +1,6 @@
 import { StarIcon } from "@chakra-ui/icons"
 import { Box } from "@chakra-ui/react"
-import React, { FC, useRef, useState } from "react"
+import React, { useRef, useState } from "react"
 import ReactFlow, {
   Background,
   ConnectionMode,
@@ -22,7 +22,7 @@ const edgeTypes = {
   custom: CustomEdge,
 }
 
-export const Flow: FC = () => {
+export const Flow = () => {
   const reactFlowWrapper = useRef<HTMLDivElement>(null)
 
   const { nodes, onNodesChange, onNodeDragStop, handleSelectNode } = useNode()
@@ -41,6 +41,7 @@ export const Flow: FC = () => {
         nodes={nodes}
         edges={edges}
         onNodesChange={onNodesChange}
+        onNodesDelete={(nodes) => console.log({ nodes })}
         onEdgesChange={onEdgesChange}
         onNodeDragStop={onNodeDragStop}
         onConnect={onConnect}

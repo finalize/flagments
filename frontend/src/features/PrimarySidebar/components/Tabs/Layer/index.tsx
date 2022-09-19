@@ -3,7 +3,7 @@ import { Box, Flex, Text } from "@chakra-ui/react"
 import { FC, useCallback, useMemo } from "react"
 import { Edge, Node, ReactFlowInstance } from "react-flow-renderer"
 
-import { selectedEdgeVar, selectedNodeVar } from "@/hooks/apollo"
+import { nodeVar, selectedEdgeVar } from "@/hooks/apollo"
 import { Colors } from "@/styles/theme"
 
 type Props = {
@@ -11,22 +11,24 @@ type Props = {
 }
 
 export const LayerTab: FC<Props> = ({ instance }) => {
-  const selectedNode = useReactiveVar(selectedNodeVar)
+  const { target, actionType } = useReactiveVar(nodeVar)
   const selectedEdge = useReactiveVar(selectedEdgeVar)
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
-  const nodes = useMemo(
-    () =>
-      instance
-        .getNodes()
-        .map((node) => (node.id === selectedNode?.id ? selectedNode : node)),
-    [instance, selectedNode]
-  )
+  const nodes = useMemo(() => {
+    const nds = instance.getNodes()
+    console.log(actionType, target?.id)
+
+    return actionType === "delete"
+      ? nds.filter((node) => node.id !== target?.id)
+      : nds.map((node) => (node.id === target?.id ? target : node))
+  }, [instance, target, actionType])
+
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const edges = useMemo(() => instance.getEdges(), [instance, selectedEdge])
 
   const onClickNode = useCallback((node: Node) => {
-    selectedNodeVar(node)
+    nodeVar({ target: node })
     selectedEdgeVar(undefined)
   }, [])
 
@@ -47,11 +49,11 @@ export const LayerTab: FC<Props> = ({ instance }) => {
               py={2}
               cursor="default"
               _hover={
-                selectedNode?.id === node.id
+                target?.id === node.id
                   ? undefined
                   : { background: "rgba(0, 0, 0, 0.1)" }
               }
-              bg={selectedNode?.id === node.id ? Colors.blue[100] : undefined}
+              bg={target?.id === node.id ? Colors.blue[100] : undefined}
               boxSizing="border-box"
               onClick={() => onClickNode(node)}
             >
