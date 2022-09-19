@@ -1,14 +1,14 @@
-import { useCallback } from "react"
+import { useCallback, useEffect } from "react"
 import { NodeDragHandler, useNodesState } from "react-flow-renderer"
 
-import { selectedNodeVar } from "@/hooks/apollo"
+import { nodeVar } from "@/hooks/apollo"
 import { CustomNode, NodeData } from "@/types"
 
 export const useNode = () => {
   const [nodes, setNodes, onNodesChange] = useNodesState<NodeData>([])
 
   const onNodeDragStop: NodeDragHandler = useCallback((_, node) => {
-    selectedNodeVar({ ...node, selected: true })
+    nodeVar({ target: { ...node, selected: true } })
   }, [])
 
   const handleSelectNode = useCallback(
@@ -21,8 +21,13 @@ export const useNode = () => {
     [setNodes]
   )
 
+  useEffect(() => {
+    console.log({ nodes })
+  }, [nodes])
+
   return {
     nodes,
+    setNodes,
     onNodesChange,
     onNodeDragStop,
     handleSelectNode,

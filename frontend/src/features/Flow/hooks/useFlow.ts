@@ -2,7 +2,7 @@ import { DragEventHandler, useCallback } from "react"
 import { addEdge, OnConnect, useReactFlow } from "react-flow-renderer"
 
 import { uuid } from "@/functions/uuid"
-import { selectedEdgeVar, selectedNodeVar } from "@/hooks/apollo"
+import { nodeVar, selectedEdgeVar } from "@/hooks/apollo"
 
 import { useEdge, useNode } from "."
 
@@ -36,7 +36,7 @@ export const useFlow = ({
   }, [])
 
   const onPaneClick = useCallback(() => {
-    selectedNodeVar(undefined)
+    nodeVar({ target: undefined })
     selectedEdgeVar(undefined)
   }, [])
 

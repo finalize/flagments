@@ -2,7 +2,7 @@ import { useReactiveVar } from "@apollo/client"
 import { useCallback } from "react"
 import { useReactFlow } from "react-flow-renderer"
 
-import { selectedNodeVar } from "@/hooks/apollo"
+import { nodeVar } from "@/hooks/apollo"
 
 type onChangeHandlePositionArgs = {
   checked: boolean
@@ -11,71 +11,82 @@ type onChangeHandlePositionArgs = {
 }
 
 export const useNode = () => {
-  const selectedNode = useReactiveVar(selectedNodeVar)
+  const node = useReactiveVar(nodeVar)
 
   const { setNodes } = useReactFlow()
 
   const onChangeLabel = useCallback(
     (label: string) => {
-      if (selectedNode === undefined) return
+      const { target } = node
+
+      if (target === undefined) return
 
       setNodes((nds) =>
         nds.map((node) => {
-          if (node.id === selectedNode.id) {
+          if (node.id === target.id) {
             return {
               ...node,
-              data: { ...selectedNode.data, label },
+              data: { ...target.data, label },
             }
           }
 
           return node
         })
       )
-      selectedNodeVar({
-        ...selectedNode,
-        data: { ...selectedNode.data, label },
+      nodeVar({
+        target: {
+          ...target,
+          data: { ...target.data, label },
+        },
       })
     },
-    [setNodes, selectedNode]
+    [setNodes, node]
   )
 
   const onChangeHandlePosition = useCallback(
     ({ checked, position, positions }: onChangeHandlePositionArgs) => {
-      if (selectedNode === undefined) return
+      const { target } = node
+
+      if (target === undefined) return
+
       const type = checked
         ? positions.indexOf(position) === -1
-          ? selectedNode.data.type === ""
+          ? target.data.type === ""
             ? position
-            : `${selectedNode.data.type}_${position}`
-          : selectedNode.data.type
+            : `${target.data.type}_${position}`
+          : target.data.type
         : positions.filter((p) => p !== position).join("_")
 
       setNodes((nds) =>
         nds.map((node) => {
-          if (node.id === selectedNode.id) {
+          if (node.id === target.id) {
             return {
               ...node,
-              data: { ...selectedNode.data, type },
+              data: { ...target.data, type },
             }
           }
 
           return node
         })
       )
-      selectedNodeVar({
-        ...selectedNode,
-        data: { ...selectedNode.data, type },
+      nodeVar({
+        target: {
+          ...target,
+          data: { ...target.data, type },
+        },
       })
     },
-    [selectedNode, setNodes]
+    [node, setNodes]
   )
 
   const onDeleteNode = useCallback(() => {
-    if (selectedNode === undefined) return
+    const { target } = node
 
-    setNodes((nds) => nds.filter((n) => n.id !== selectedNode.id))
-    selectedNodeVar(undefined)
-  }, [setNodes, selectedNode])
+    if (target === undefined) return
+
+    setNodes((nds) => nds.filter((n) => n.id !== target.id))
+    nodeVar({ target: undefined })
+  }, [setNodes, node])
 
   return {
     onChangeLabel,

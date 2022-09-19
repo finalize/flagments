@@ -3,7 +3,7 @@ import { memo, useEffect } from "react"
 import { Handle, useUpdateNodeInternals } from "react-flow-renderer"
 
 import { getHandle } from "@/functions/getNodeTypes"
-import { selectedNodeVar } from "@/hooks/apollo"
+import { nodeVar } from "@/hooks/apollo"
 import { Colors } from "@/styles/theme"
 import { CustomNodeProps } from "@/types"
 
@@ -26,7 +26,7 @@ const Component = (props: CustomNodeProps) => {
 
   useEffect(() => {
     if (props.selected) {
-      selectedNodeVar({ ...props, position: { x: xPos, y: yPos } })
+      nodeVar({ target: { ...props, position: { x: xPos, y: yPos } } })
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [props.selected])

@@ -8,16 +8,16 @@ import {
 } from "@chakra-ui/react"
 import { useReactFlow } from "react-flow-renderer"
 
-import { selectedNodeVar } from "@/hooks/apollo"
+import { nodeVar } from "@/hooks/apollo"
 
 import { EdgeTab } from "./Edge"
 import { NodeTab } from "./Node"
 
 export const Tabs = () => {
-  const selectedNode = useReactiveVar(selectedNodeVar)
+  const { target } = useReactiveVar(nodeVar)
   const instance = useReactFlow()
 
-  if (selectedNode === undefined) return null
+  if (target === undefined) return null
 
   return (
     <ChakraTabs isFitted>
@@ -27,10 +27,10 @@ export const Tabs = () => {
       </TabList>
       <TabPanels>
         <TabPanel p={0}>
-          <NodeTab instance={instance} selectedNode={selectedNode} />
+          <NodeTab instance={instance} targetNode={target} />
         </TabPanel>
         <TabPanel p={0}>
-          <EdgeTab instance={instance} selectedNode={selectedNode} />
+          <EdgeTab instance={instance} selectedNode={target} />
         </TabPanel>
       </TabPanels>
     </ChakraTabs>
