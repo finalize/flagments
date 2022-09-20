@@ -24,7 +24,8 @@
     "react": "18.2.0",
     "react-dom": "18.2.0",
     "react-flow-renderer": "^10.3.16",
-    "react-hook-form": "^7.34.2"
+    "react-hook-form": "^7.34.2",
+    "zustand": "^4.1.1"
   },
   "devDependencies": {
     "@graphql-codegen/cli": "^2.12.0",
