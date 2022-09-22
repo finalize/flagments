@@ -72,7 +72,13 @@ export const useStore = create<State>((set, get) => ({
     })
   },
   setTargetEdge: (id) => {
-    set({ targetEdge: { id } })
+    const edges = get().edges.map((n) => {
+      if (n.id === id) {
+        return { ...n, selected: true }
+      }
+      return { ...n, selected: false }
+    })
+    set({ edges, targetEdge: { id } })
   },
   resetTargetNode: () => {
     set({ targetNode: undefined })
