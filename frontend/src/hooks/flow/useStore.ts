@@ -89,7 +89,10 @@ export const useStore = create<State>((set, get) => ({
   addNode: (node) => {
     const nds = get().nodes.map((n) => ({ ...n, selected: false }))
     set({
-      nodes: [...nds, node],
+      nodes: [
+        ...nds,
+        { ...node, data: { ...node.data, label: `ノード ${nds.length + 1}` } },
+      ],
       targetNode: {
         id: node.id,
       },

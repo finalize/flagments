@@ -1,4 +1,4 @@
-import { Textarea } from "@chakra-ui/react"
+import { Input } from "@chakra-ui/react"
 import { ChangeEventHandler, useEffect, useState } from "react"
 
 import { useStore } from "@/hooks/flow/useStore"
@@ -11,7 +11,7 @@ export const Label = () => {
 
   const [value, setValue] = useState(node?.data.label ?? "")
 
-  const onChange: ChangeEventHandler<HTMLTextAreaElement> = ({
+  const onChange: ChangeEventHandler<HTMLInputElement> = ({
     target: { value },
   }) => {
     setValue(value)
@@ -27,7 +27,7 @@ export const Label = () => {
 
   return (
     <Container title="ラベル">
-      <Textarea value={value} placeholder="ラベルを入力" onChange={onChange} />
+      <Input value={value} placeholder="ラベルを入力" onChange={onChange} />
     </Container>
   )
 }

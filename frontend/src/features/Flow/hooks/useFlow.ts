@@ -1,8 +1,9 @@
 import { DragEventHandler, useCallback } from "react"
-import { Node, useReactFlow } from "react-flow-renderer"
+import { useReactFlow } from "react-flow-renderer"
 
 import { uuid } from "@/functions/uuid"
 import { useStore } from "@/hooks/flow/useStore"
+import { CustomNode } from "@/types"
 
 type Args = {
   reactFlowWrapper: React.RefObject<HTMLDivElement>
@@ -46,12 +47,12 @@ export const useFlow = ({ reactFlowWrapper }: Args) => {
         y: event.clientY - reactFlowBounds.top,
       })
 
-      const node: Node = {
+      const node: CustomNode = {
         id: uuid(),
         type: "custom",
         position,
         selected: true,
-        data: { type, label: "" },
+        data: { label: "", handles: [] },
       }
 
       addNode(node)

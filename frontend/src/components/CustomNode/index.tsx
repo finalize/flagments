@@ -33,7 +33,7 @@ const Component = (props: CustomNodeProps) => {
       w={200}
     >
       <Text fontSize="xs" textAlign="center">
-        {label === "" ? "ラベルなし" : label}
+        {label}
       </Text>
       {handles?.map((position) => (
         <Handle
