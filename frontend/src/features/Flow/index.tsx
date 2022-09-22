@@ -10,8 +10,10 @@ import ReactFlow, {
 } from "react-flow-renderer"
 
 import { CustomEdge, CustomNode } from "@/components"
+import { useEdges } from "@/hooks/flow/useEdges"
+import { useNodes } from "@/hooks/flow/useNodes"
 
-import { useEdge, useNode } from "./hooks"
+import { useEdge } from "./hooks"
 import { useFlow } from "./hooks"
 
 const nodeTypes = {
@@ -25,12 +27,11 @@ const edgeTypes = {
 export const Flow = () => {
   const reactFlowWrapper = useRef<HTMLDivElement>(null)
 
-  const { nodes, onNodesChange, onNodeDragStop, handleSelectNode } = useNode()
-  const { edges, setEdges, onEdgesChange, onEdgeClick } = useEdge()
-  const { onConnect, onDrop, onDragOver, onPaneClick } = useFlow({
+  const { nodes, onNodesChange, setTarget, removeNode } = useNodes()
+  const { edges, onEdgesChange, onConnect } = useEdges()
+  const { onEdgeClick } = useEdge()
+  const { onDrop, onDragOver, onPaneClick } = useFlow({
     reactFlowWrapper,
-    setEdges,
-    handleSelectNode,
   })
 
   const [showMinimap, setShowMinimap] = useState(true)
@@ -39,19 +40,20 @@ export const Flow = () => {
     <Box className="reactflow-wrapper" gridArea="flow" ref={reactFlowWrapper}>
       <ReactFlow
         nodes={nodes}
-        edges={edges}
+        nodeTypes={nodeTypes}
         onNodesChange={onNodesChange}
-        onNodesDelete={(nodes) => console.log({ nodes })}
+        onNodesDelete={([node]) => removeNode(node.id)}
+        onNodeClick={(_, { id }) => setTarget(id)}
+        onNodeDragStop={(_, { id }) => setTarget(id)}
+        edges={edges}
+        edgeTypes={edgeTypes}
         onEdgesChange={onEdgesChange}
-        onNodeDragStop={onNodeDragStop}
+        onEdgeClick={onEdgeClick}
         onConnect={onConnect}
         onDrop={onDrop}
         onDragOver={onDragOver}
-        onEdgeClick={onEdgeClick}
         onPaneClick={onPaneClick}
         connectionMode={ConnectionMode.Loose}
-        nodeTypes={nodeTypes}
-        edgeTypes={edgeTypes}
         fitView
       >
         <Controls>

@@ -4,6 +4,7 @@ import { FC, useCallback, useMemo } from "react"
 import { Edge, Node, ReactFlowInstance } from "react-flow-renderer"
 
 import { nodeVar, selectedEdgeVar } from "@/hooks/apollo"
+import { useNodes } from "@/hooks/flow/useNodes"
 import { Colors } from "@/styles/theme"
 
 type Props = {
@@ -11,18 +12,9 @@ type Props = {
 }
 
 export const LayerTab: FC<Props> = ({ instance }) => {
-  const { target, actionType } = useReactiveVar(nodeVar)
   const selectedEdge = useReactiveVar(selectedEdgeVar)
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const nodes = useMemo(() => {
-    const nds = instance.getNodes()
-    console.log(actionType, target?.id)
-
-    return actionType === "delete"
-      ? nds.filter((node) => node.id !== target?.id)
-      : nds.map((node) => (node.id === target?.id ? target : node))
-  }, [instance, target, actionType])
+  const { nodes, target } = useNodes((state) => state)
 
   // eslint-disable-next-line react-hooks/exhaustive-deps
   const edges = useMemo(() => instance.getEdges(), [instance, selectedEdge])
@@ -45,6 +37,7 @@ export const LayerTab: FC<Props> = ({ instance }) => {
         {nodes.map((node) => (
           <Box key={node.id}>
             <Box
+              pr={2}
               pl={8}
               py={2}
               cursor="default"

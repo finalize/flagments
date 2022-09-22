@@ -1,46 +1,25 @@
 import { Box, Button } from "@chakra-ui/react"
-import { ChangeEventHandler, FC } from "react"
-import { ReactFlowInstance } from "react-flow-renderer"
+import { useCallback } from "react"
 
 import {
   Handle,
   Label,
 } from "@/features/SecondarySidebar/components/Properties"
-import { nodeVar } from "@/hooks/apollo"
-import { useNode } from "@/hooks/flow"
-import { CustomNode } from "@/types"
+import { useNodes } from "@/hooks/flow/useNodes"
 
-type Props = {
-  instance: ReactFlowInstance
-  targetNode: CustomNode
-}
+export const NodeTab = () => {
+  const { removeNode } = useNodes((state) => state)
 
-export const NodeTab: FC<Props> = ({ instance, targetNode }) => {
-  const { onChangeLabel } = useNode()
-
-  const onChange: ChangeEventHandler<HTMLTextAreaElement> = ({
-    target: { value: label },
-  }) => {
-    onChangeLabel(label)
-  }
-
-  const onDeleteNode = () => {
-    instance.setNodes((nds) => nds.filter((n) => n.id !== targetNode.id))
-    instance.setEdges((nds) =>
-      nds.filter(
-        (n) => n.source !== targetNode.id && n.target !== targetNode.id
-      )
-    )
-
-    nodeVar({ target: targetNode, actionType: "delete" })
-  }
+  const onClick = useCallback(()=> {
+    removeNode()
+  },[removeNode])
 
   return (
     <>
-      <Label value={targetNode?.data?.label} onChange={onChange} />
-      <Handle targetNode={targetNode} />
-      <Box p={4} px={4}>
-        <Button variant="ghost" color="red.500" w="full" onClick={onDeleteNode}>
+      <Label />
+      <Handle />
+      <Box p={4}>
+        <Button variant="ghost" color="red.500" w="full" onClick={onClick}>
           削除
         </Button>
       </Box>

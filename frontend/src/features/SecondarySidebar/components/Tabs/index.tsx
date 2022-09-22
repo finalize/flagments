@@ -1,4 +1,3 @@
-import { useReactiveVar } from "@apollo/client"
 import {
   Tab,
   TabList,
@@ -6,16 +5,14 @@ import {
   TabPanels,
   Tabs as ChakraTabs,
 } from "@chakra-ui/react"
-import { useReactFlow } from "react-flow-renderer"
 
-import { nodeVar } from "@/hooks/apollo"
+import { useNodes } from "@/hooks/flow/useNodes"
 
 import { EdgeTab } from "./Edge"
 import { NodeTab } from "./Node"
 
 export const Tabs = () => {
-  const { target } = useReactiveVar(nodeVar)
-  const instance = useReactFlow()
+  const target = useNodes((state) => state.target)
 
   if (target === undefined) return null
 
@@ -27,10 +24,10 @@ export const Tabs = () => {
       </TabList>
       <TabPanels>
         <TabPanel p={0}>
-          <NodeTab instance={instance} targetNode={target} />
+          <NodeTab />
         </TabPanel>
         <TabPanel p={0}>
-          <EdgeTab instance={instance} selectedNode={target} />
+          <EdgeTab />
         </TabPanel>
       </TabPanels>
     </ChakraTabs>

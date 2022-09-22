@@ -1,44 +1,24 @@
 import { DragEventHandler, useCallback } from "react"
-import { addEdge, OnConnect, useReactFlow } from "react-flow-renderer"
+import { Node, useReactFlow } from "react-flow-renderer"
 
 import { uuid } from "@/functions/uuid"
-import { nodeVar, selectedEdgeVar } from "@/hooks/apollo"
-
-import { useEdge, useNode } from "."
+import { useNodes } from "@/hooks/flow/useNodes"
 
 type Args = {
   reactFlowWrapper: React.RefObject<HTMLDivElement>
-  setEdges: ReturnType<typeof useEdge>["setEdges"]
-  handleSelectNode: ReturnType<typeof useNode>["handleSelectNode"]
 }
 
-export const useFlow = ({
-  reactFlowWrapper,
-  setEdges,
-  handleSelectNode,
-}: Args) => {
+export const useFlow = ({ reactFlowWrapper }: Args) => {
   const instance = useReactFlow()
 
-  const onConnect: OnConnect = useCallback(
-    (params) =>
-      setEdges((eds) => {
-        const edges = addEdge({ ...params }, eds)
-        const edge = selectedEdgeVar(edges.at(-1))
-        selectedEdgeVar(edge)
-        return edges
-      }),
-    [setEdges]
-  )
+  const { addNode, resetTarget } = useNodes((state) => state)
 
   const onDragOver: DragEventHandler = useCallback((event) => {
     event.preventDefault()
     event.dataTransfer.dropEffect = "move"
   }, [])
 
-  const onPaneClick = useCallback(() => {
-    nodeVar({ target: undefined })
-    selectedEdgeVar(undefined)
-  }, [])
+  const onPaneClick = useCallback(() => resetTarget(), [resetTarget])
 
   const onDrop: DragEventHandler = useCallback(
     (event) => {
@@ -61,7 +41,7 @@ export const useFlow = ({
         y: event.clientY - reactFlowBounds.top,
       })
 
-      const node = {
+      const node: Node = {
         id: uuid(),
         type: "custom",
         position,
@@ -69,13 +49,12 @@ export const useFlow = ({
         data: { type, label: "" },
       }
 
-      handleSelectNode(node)
+      addNode(node)
     },
-    [instance, reactFlowWrapper, handleSelectNode]
+    [instance, reactFlowWrapper, addNode]
   )
 
   return {
-    onConnect,
     onDragOver,
     onPaneClick,
     onDrop,
