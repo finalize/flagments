@@ -4,6 +4,7 @@ import { Node, NodeProps, Position } from "react-flow-renderer"
 export type NodeData = {
   label: string
   handles: Position[]
+  description?: string
 }
 
 export type CustomNode = Node<NodeData>

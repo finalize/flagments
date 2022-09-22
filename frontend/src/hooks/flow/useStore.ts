@@ -28,6 +28,7 @@ type State = {
   addNode: (node: CustomNode) => void
   removeNode: (id?: string) => void
   onChangeLabel: (value: string) => void
+  onChangeDescription: (value: string) => void
   onChangeHandle: (handles: Position[]) => void
   getNode: () => CustomNode | undefined
   // optional
@@ -116,6 +117,23 @@ export const useStore = create<State>((set, get) => ({
           return {
             ...node,
             data: { ...node.data, label: value },
+          }
+        }
+
+        return node
+      }),
+    })
+  },
+  onChangeDescription: (value) => {
+    const id = get().targetNode?.id
+    if (id === undefined) return
+
+    set({
+      nodes: get().nodes.map((node) => {
+        if (node.id === id) {
+          return {
+            ...node,
+            data: { ...node.data, description: value },
           }
         }
 
