@@ -2,7 +2,7 @@ import { DragEventHandler, useCallback } from "react"
 import { Node, useReactFlow } from "react-flow-renderer"
 
 import { uuid } from "@/functions/uuid"
-import { useNodes } from "@/hooks/flow/useNodes"
+import { useStore } from "@/hooks/flow/useStore"
 
 type Args = {
   reactFlowWrapper: React.RefObject<HTMLDivElement>
@@ -11,14 +11,19 @@ type Args = {
 export const useFlow = ({ reactFlowWrapper }: Args) => {
   const instance = useReactFlow()
 
-  const { addNode, resetTarget } = useNodes((state) => state)
+  const { addNode, resetTargetNode, resetTargetEdge } = useStore(
+    (state) => state
+  )
 
   const onDragOver: DragEventHandler = useCallback((event) => {
     event.preventDefault()
     event.dataTransfer.dropEffect = "move"
   }, [])
 
-  const onPaneClick = useCallback(() => resetTarget(), [resetTarget])
+  const onPaneClick = useCallback(() => {
+    resetTargetNode()
+    resetTargetEdge()
+  }, [resetTargetNode, resetTargetEdge])
 
   const onDrop: DragEventHandler = useCallback(
     (event) => {

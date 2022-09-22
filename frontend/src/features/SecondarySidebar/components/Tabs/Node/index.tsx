@@ -5,14 +5,14 @@ import {
   Handle,
   Label,
 } from "@/features/SecondarySidebar/components/Properties"
-import { useNodes } from "@/hooks/flow/useNodes"
+import { useStore } from "@/hooks/flow/useStore"
 
 export const NodeTab = () => {
-  const { removeNode } = useNodes((state) => state)
+  const { removeNode } = useStore((state) => state)
 
-  const onClick = useCallback(()=> {
+  const onClick = useCallback(() => {
     removeNode()
-  },[removeNode])
+  }, [removeNode])
 
   return (
     <>

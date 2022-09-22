@@ -2,12 +2,12 @@ import { Flex, Switch, Text } from "@chakra-ui/react"
 import { useEffect, useState } from "react"
 import { Position } from "react-flow-renderer"
 
-import { useNodes } from "@/hooks/flow/useNodes"
+import { useStore } from "@/hooks/flow/useStore"
 
 import { Container } from "../Container"
 
 export const Handle = () => {
-  const { onChangeHandle, getNode,target } = useNodes((state) => state)
+  const { onChangeHandle, getNode, targetNode } = useStore((state) => state)
   const node = getNode()
   const [handles, setHandles] = useState(node?.data.handles ?? [])
 
@@ -29,9 +29,9 @@ export const Handle = () => {
     onChangeHandle(handles)
   }, [handles, onChangeHandle])
 
-  useEffect(()=>{
+  useEffect(() => {
     setHandles(node?.data.handles ?? [])
-  },[target,node])
+  }, [targetNode, node])
 
   return (
     <Container title="ハンドル">

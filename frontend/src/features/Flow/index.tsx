@@ -6,14 +6,14 @@ import ReactFlow, {
   ConnectionMode,
   ControlButton,
   Controls,
+  EdgeMouseHandler,
   MiniMap,
+  NodeMouseHandler,
 } from "react-flow-renderer"
 
 import { CustomEdge, CustomNode } from "@/components"
-import { useEdges } from "@/hooks/flow/useEdges"
-import { useNodes } from "@/hooks/flow/useNodes"
+import { useStore } from "@/hooks/flow/useStore"
 
-import { useEdge } from "./hooks"
 import { useFlow } from "./hooks"
 
 const nodeTypes = {
@@ -27,14 +27,34 @@ const edgeTypes = {
 export const Flow = () => {
   const reactFlowWrapper = useRef<HTMLDivElement>(null)
 
-  const { nodes, onNodesChange, setTarget, removeNode } = useNodes()
-  const { edges, onEdgesChange, onConnect } = useEdges()
-  const { onEdgeClick } = useEdge()
+  const {
+    nodes,
+    onNodesChange,
+    removeNode,
+    setTargetNode,
+    resetTargetNode,
+    edges,
+    onEdgesChange,
+    onConnect,
+    setTargetEdge,
+    resetTargetEdge,
+  } = useStore()
+
   const { onDrop, onDragOver, onPaneClick } = useFlow({
     reactFlowWrapper,
   })
 
   const [showMinimap, setShowMinimap] = useState(true)
+
+  const onNodeClick: NodeMouseHandler = (_, { id }) => {
+    setTargetNode(id)
+    resetTargetEdge()
+  }
+
+  const onEdgeClick: EdgeMouseHandler = (_, { id }) => {
+    setTargetEdge(id)
+    resetTargetNode()
+  }
 
   return (
     <Box className="reactflow-wrapper" gridArea="flow" ref={reactFlowWrapper}>
@@ -43,8 +63,8 @@ export const Flow = () => {
         nodeTypes={nodeTypes}
         onNodesChange={onNodesChange}
         onNodesDelete={([node]) => removeNode(node.id)}
-        onNodeClick={(_, { id }) => setTarget(id)}
-        onNodeDragStop={(_, { id }) => setTarget(id)}
+        onNodeClick={onNodeClick}
+        onNodeDragStop={(_, { id }) => setTargetNode(id)}
         edges={edges}
         edgeTypes={edgeTypes}
         onEdgesChange={onEdgesChange}

@@ -6,21 +6,21 @@ import {
   Tabs as ChakraTabs,
 } from "@chakra-ui/react"
 
-import { useNodes } from "@/hooks/flow/useNodes"
+import { useStore } from "@/hooks/flow/useStore"
 
 import { EdgeTab } from "./Edge"
 import { NodeTab } from "./Node"
 
 export const Tabs = () => {
-  const target = useNodes((state) => state.target)
+  const { targetEdge, targetNode } = useStore((state) => state)
 
-  if (target === undefined) return null
+  if (targetEdge === undefined || targetNode === undefined) return null
 
   return (
     <ChakraTabs isFitted>
       <TabList>
         <Tab>ノード</Tab>
-        <Tab>線</Tab>
+        <Tab>ベクター</Tab>
       </TabList>
       <TabPanels>
         <TabPanel p={0}>

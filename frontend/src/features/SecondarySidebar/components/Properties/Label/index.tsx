@@ -1,12 +1,12 @@
 import { Textarea } from "@chakra-ui/react"
 import { ChangeEventHandler, useEffect, useState } from "react"
 
-import { useNodes } from "@/hooks/flow/useNodes"
+import { useStore } from "@/hooks/flow/useStore"
 
 import { Container } from "../Container"
 
 export const Label = () => {
-  const { onChangeLabel, getNode,target } = useNodes((state) => state)
+  const { onChangeLabel, getNode, targetNode } = useStore((state) => state)
   const node = getNode()
 
   const [value, setValue] = useState(node?.data.label ?? "")
@@ -21,9 +21,9 @@ export const Label = () => {
     onChangeLabel(value)
   }, [value, onChangeLabel])
 
-  useEffect(()=>{
+  useEffect(() => {
     setValue(node?.data.label ?? "")
-  },[target,node])
+  }, [targetNode, node])
 
   return (
     <Container title="ラベル">

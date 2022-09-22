@@ -1,49 +1,104 @@
-import { applyNodeChanges, OnNodesChange, Position } from "react-flow-renderer"
+import {
+  addEdge,
+  applyEdgeChanges,
+  applyNodeChanges,
+  Connection,
+  Edge,
+  EdgeChange,
+  OnConnect,
+  OnEdgesChange,
+  OnNodesChange,
+  Position,
+} from "react-flow-renderer"
 import create from "zustand"
 
 import { CustomNode } from "@/types"
 
 type State = {
   nodes: CustomNode[]
+  edges: Edge[]
+  onConnect: OnConnect
   onNodesChange: OnNodesChange
+  onEdgesChange: OnEdgesChange
+  setTargetNode: (id: string) => void
+  setTargetEdge: (id: string) => void
+  resetTargetNode: () => void
+  resetTargetEdge: () => void
+  // nodes
   addNode: (node: CustomNode) => void
   removeNode: (id?: string) => void
   onChangeLabel: (value: string) => void
   onChangeHandle: (handles: Position[]) => void
   getNode: () => CustomNode | undefined
-  setTarget: (id: string) => void
-  resetTarget: () => void
-  target?: {
+  // optional
+  targetNode?: {
+    id: string
+  }
+  targetEdge?: {
     id: string
   }
 }
 
-export const useNodes = create<State>((set, get) => ({
+export const useStore = create<State>((set, get) => ({
   nodes: [],
+  edges: [],
+  onConnect: (connection: Connection) => {
+    set({
+      edges: addEdge(connection, get().edges),
+    })
+  },
   onNodesChange: (changes) => {
     set({
       nodes: applyNodeChanges(changes, get().nodes),
     })
   },
+  onEdgesChange: (changes: EdgeChange[]) => {
+    set({
+      edges: applyEdgeChanges(changes, get().edges),
+    })
+  },
+  setTargetNode: (id) => {
+    const nodes = get().nodes.map((n) => {
+      if (n.id === id) {
+        return { ...n, selected: true }
+      }
+      return { ...n, selected: false }
+    })
+    set({
+      nodes,
+      targetNode: {
+        id,
+      },
+    })
+  },
+  setTargetEdge: (id) => {
+    set({ targetEdge: { id } })
+  },
+  resetTargetNode: () => {
+    set({ targetNode: undefined })
+  },
+  resetTargetEdge: () => {
+    set({ targetEdge: undefined })
+  },
   addNode: (node) => {
     const nds = get().nodes.map((n) => ({ ...n, selected: false }))
     set({
       nodes: [...nds, node],
-      target: {
+      targetNode: {
         id: node.id,
       },
     })
   },
   removeNode: (nodeId) => {
-    const id = nodeId ?? get().target?.id
+    const id = nodeId ?? get().targetNode?.id
     if (id === undefined) return
     set({
       nodes: applyNodeChanges([{ id, type: "remove" }], get().nodes),
-      target: undefined,
+      targetNode: undefined,
     })
   },
   onChangeLabel: (value) => {
-    const id = get().target?.id
+    const id = get().targetNode?.id
     if (id === undefined) return
 
     set({
@@ -60,7 +115,7 @@ export const useNodes = create<State>((set, get) => ({
     })
   },
   onChangeHandle: (handles) => {
-    const id = get().target?.id
+    const id = get().targetNode?.id
     if (id === undefined) return
 
     set({
@@ -77,16 +132,11 @@ export const useNodes = create<State>((set, get) => ({
     })
   },
   getNode: () => {
-    const id = get().target?.id
+    const id = get().targetNode?.id
     if (id === undefined) return
 
     return get().nodes.find((node) => node.id === id)
   },
-  setTarget: (id) => {
-    set({ target: { id } })
-  },
-  resetTarget: () => {
-    set({ target: undefined })
-  },
-  target: undefined,
+  targetNode: undefined,
+  targetEdge: undefined,
 }))
