@@ -1,6 +1,4 @@
 import { Box, Flex, Text } from "@chakra-ui/react"
-import { useCallback } from "react"
-import { Edge, Node } from "react-flow-renderer"
 
 import { useStore } from "@/hooks/flow/useStore"
 import { Colors } from "@/styles/theme"
@@ -8,20 +6,6 @@ import { Colors } from "@/styles/theme"
 export const LayerTab = () => {
   const { nodes, targetNode, setTargetNode, edges, targetEdge, setTargetEdge } =
     useStore((state) => state)
-
-  const onClickNode = useCallback(
-    (node: Node) => {
-      setTargetNode(node.id)
-    },
-    [setTargetNode]
-  )
-
-  const onClickEdge = useCallback(
-    (edge: Edge) => {
-      setTargetEdge(edge.id)
-    },
-    [setTargetEdge]
-  )
 
   return (
     <Flex flexDirection="column">
@@ -43,7 +27,7 @@ export const LayerTab = () => {
               }
               bg={targetNode?.id === node.id ? Colors.blue[100] : undefined}
               boxSizing="border-box"
-              onClick={() => onClickNode(node)}
+              onClick={() => setTargetNode(node.id)}
             >
               <Text>
                 {node.data.label === ""
@@ -66,7 +50,7 @@ export const LayerTab = () => {
             cursor="default"
             _hover={{ background: "rgba(0, 0, 0, 0.1)" }}
             bg={targetEdge?.id === edge.id ? Colors.blue[100] : undefined}
-            onClick={() => onClickEdge(edge)}
+            onClick={() => setTargetEdge(edge.id)}
           >
             {edge.label ?? `ベクター ${index + 1}`}
           </Flex>
