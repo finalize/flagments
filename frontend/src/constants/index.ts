@@ -1,18 +1,1 @@
-export const NODE_TYPES = [
-  "top",
-  "right",
-  "left",
-  "bottom",
-  "top_right",
-  "top_bottom",
-  "top_left",
-  "right_bottom",
-  "right_left",
-  "bottom_left",
-  "left_top",
-  "top_right_bottom",
-  "top_right_left",
-  "right_bottom_left",
-  "left_top_bottom",
-  "top_right_bottom_left",
-]
+export const SHAPES = ["default"]
