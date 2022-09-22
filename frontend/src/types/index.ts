@@ -2,9 +2,8 @@ import { UseDisclosureReturn } from "@chakra-ui/react"
 import { Node, NodeProps, Position } from "react-flow-renderer"
 
 export type NodeData = {
-  type: string
   label: string
-  targetHandle?: Position
+  handles: Position[]
 }
 
 export type CustomNode = Node<NodeData>
