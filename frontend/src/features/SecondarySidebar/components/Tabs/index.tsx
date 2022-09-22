@@ -14,7 +14,7 @@ import { NodeTab } from "./Node"
 export const Tabs = () => {
   const { targetEdge, targetNode } = useStore((state) => state)
 
-  if (targetEdge === undefined || targetNode === undefined) return null
+  if (targetEdge === undefined && targetNode === undefined) return null
 
   return (
     <ChakraTabs isFitted>
