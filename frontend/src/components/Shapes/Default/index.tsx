@@ -1,25 +1,15 @@
 import { Box } from "@chakra-ui/react"
 import { DragEvent, FC } from "react"
-import { Handle, Position } from "react-flow-renderer"
-
-import { Colors } from "@/styles/theme"
 
 type Props = {
-  type: string
+  shape: string
 }
 
-export const DefaultShape: FC<Props> = ({ type }) => {
-  const onDragStart = (event: DragEvent, nodeType: string) => {
-    event.dataTransfer.setData("application/reactflow", nodeType)
+export const Default: FC<Props> = ({ shape }) => {
+  const onDragStart = (event: DragEvent, shape: string) => {
+    event.dataTransfer.setData("application/reactflow", shape)
     event.dataTransfer.effectAllowed = "move"
   }
-
-  const positions = type.split("_").map((t) => {
-    if (t === "top") return Position.Top
-    if (t === "bottom") return Position.Bottom
-    if (t === "right") return Position.Right
-    return Position.Left
-  })
 
   return (
     <Box
@@ -35,21 +25,8 @@ export const DefaultShape: FC<Props> = ({ type }) => {
       w={200}
       h={9}
       opacity={0.999}
-      onDragStart={(event) => onDragStart(event, type)}
+      onDragStart={(event) => onDragStart(event, shape)}
       draggable
-    >
-      {positions.map((p) => (
-        <Handle
-          key={p}
-          type="target"
-          position={p}
-          style={{
-            background: Colors.flow.handle.backgounrd,
-            width: "8px",
-            height: "8px",
-          }}
-        />
-      ))}
-    </Box>
+    />
   )
 }
