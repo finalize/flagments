@@ -7,7 +7,7 @@ import { CustomNodeProps } from "@/types"
 
 const Component = (props: CustomNodeProps) => {
   const {
-    data: { label, handles },
+    data: { label, handles, color },
     selected,
     id,
   } = props
@@ -22,9 +22,10 @@ const Component = (props: CustomNodeProps) => {
     <Box
       alignItems="center"
       bg="white"
-      color={selected ? "blue.400" : "black"}
-      borderColor={selected ? "blue.400" : "black"}
+      color={color}
+      borderColor={color}
       borderWidth={1}
+      borderStyle={selected ? "dashed" : "solid"}
       justifyContent="center"
       position="relative"
       px={8}

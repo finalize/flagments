@@ -30,6 +30,7 @@ type State = {
   onChangeLabel: (value: string) => void
   onChangeDescription: (value: string) => void
   onChangeHandle: (handles: Position[]) => void
+  onChangeColor: (value: string) => void
   getNode: () => CustomNode | undefined
   // optional
   targetNode?: {
@@ -151,6 +152,23 @@ export const useStore = create<State>((set, get) => ({
           return {
             ...node,
             data: { ...node.data, handles },
+          }
+        }
+
+        return node
+      }),
+    })
+  },
+  onChangeColor: (value) => {
+    const id = get().targetNode?.id
+    if (id === undefined) return
+
+    set({
+      nodes: get().nodes.map((node) => {
+        if (node.id === id) {
+          return {
+            ...node,
+            data: { ...node.data, color: value },
           }
         }
 

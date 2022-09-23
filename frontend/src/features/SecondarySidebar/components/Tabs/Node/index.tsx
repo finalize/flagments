@@ -2,6 +2,7 @@ import { Box, Button } from "@chakra-ui/react"
 import { useCallback } from "react"
 
 import {
+  Color,
   Description,
   Handle,
   Label,
@@ -20,6 +21,7 @@ export const NodeTab = () => {
       <Label />
       <Description />
       <Handle />
+      <Color />
       <Box p={4}>
         <Button variant="ghost" color="red.500" w="full" onClick={onClick}>
           削除

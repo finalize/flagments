@@ -3,6 +3,7 @@ import { useReactFlow } from "react-flow-renderer"
 
 import { uuid } from "@/functions/uuid"
 import { useStore } from "@/hooks/flow/useStore"
+import { Colors } from "@/styles/theme"
 import { CustomNode } from "@/types"
 
 type Args = {
@@ -52,7 +53,7 @@ export const useFlow = ({ reactFlowWrapper }: Args) => {
         type: "custom",
         position,
         selected: true,
-        data: { label: "", handles: [] },
+        data: { label: "", handles: [], color: Colors.green[400] },
       }
 
       addNode(node)
