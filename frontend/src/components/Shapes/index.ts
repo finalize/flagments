@@ -1,1 +1,1 @@
-export { DefaultShape } from "./Default"
+export { Default } from "./Default"
