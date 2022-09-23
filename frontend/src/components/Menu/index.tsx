@@ -11,7 +11,7 @@ import {
 import isequal from "lodash.isequal"
 import React from "react"
 
-import { templateVar } from "@/hooks/apollo"
+import { templateVar } from "@/hooks/apollo/useTemplateVar"
 import { Template } from "@/styles/grid"
 
 export const Menu = () => {
