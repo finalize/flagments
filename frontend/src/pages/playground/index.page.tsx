@@ -9,6 +9,10 @@ const Playground: NextPage = () => {
       <Head>
         <title>プレイグラウンド</title>
         <link rel="icon" href="/favicon.ico" />
+        <style>
+          @import
+          url(https://fonts.googleapis.com/css2?family=Lato&family=Roboto&display=swap);
+        </style>
       </Head>
 
       <Layout />
