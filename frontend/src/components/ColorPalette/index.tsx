@@ -16,12 +16,11 @@ export const ColorPalette = ({ value, onChange }: Props) => {
 
   return (
     <Grid {...getRootProps()} templateColumns="repeat(5, 1fr)" gap={4}>
-      {colors.map(({ name, bgColor, borderColor }) => {
+      {colors.map(({ name, color }) => {
         return (
           <CustomRadio
             key={name}
-            bgColor={bgColor}
-            borderColor={borderColor}
+            color={color}
             {...getRadioProps({ value: name })}
           />
         )

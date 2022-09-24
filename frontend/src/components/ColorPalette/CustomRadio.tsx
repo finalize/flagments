@@ -1,11 +1,10 @@
 import { Box, FormLabel, RadioProps, useRadio } from "@chakra-ui/react"
 
 type Props = RadioProps & {
-  bgColor: string
-  borderColor: string
+  color: string
 }
 
-export const CustomRadio = ({ bgColor, borderColor, ...radioProps }: Props) => {
+export const CustomRadio = ({ color, ...radioProps }: Props) => {
   const { state, getInputProps, getCheckboxProps, htmlProps } =
     useRadio(radioProps)
 
@@ -14,9 +13,9 @@ export const CustomRadio = ({ bgColor, borderColor, ...radioProps }: Props) => {
       <input {...getInputProps({})} hidden />
       <Box
         {...getCheckboxProps()}
-        borderColor={state.isChecked ? borderColor : "transparent"}
+        borderColor={state.isChecked ? color : "transparent"}
         borderWidth={4}
-        backgroundColor={bgColor}
+        backgroundColor={state.isChecked ? "white" : color}
         w={8}
         h={8}
         rounded="full"
