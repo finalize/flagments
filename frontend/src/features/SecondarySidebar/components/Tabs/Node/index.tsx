@@ -1,13 +1,9 @@
 import { Box, Button } from "@chakra-ui/react"
 import { useCallback } from "react"
 
-import {
-  Color,
-  Description,
-  Handle,
-  Label,
-} from "@/features/SecondarySidebar/components/Properties"
 import { useStore } from "@/hooks/flow/useStore"
+
+import { Color, Description, Handle, Label } from "./Properties"
 
 export const NodeTab = () => {
   const { removeNode } = useStore((state) => state)
