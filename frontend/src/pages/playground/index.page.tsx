@@ -11,7 +11,7 @@ const Playground: NextPage = () => {
         <link rel="icon" href="/favicon.ico" />
         <style>
           @import
-          url(https://fonts.googleapis.com/css2?family=Lato&family=Roboto&display=swap);
+          url(https://fonts.googleapis.com/css2?family=Noto+Sans+JP&family=Roboto&display=swap)
         </style>
       </Head>
 

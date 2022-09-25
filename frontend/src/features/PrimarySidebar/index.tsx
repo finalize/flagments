@@ -11,6 +11,7 @@ export const PrimarySidebar = () => {
       borderColor="gray.200"
       borderRightWidth={1}
       overflowY="scroll"
+      fontFamily="Noto Sans JP"
     >
       <Tabs />
     </Box>

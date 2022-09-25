@@ -1,5 +1,4 @@
 import {
-  Box,
   Editable,
   EditableInput,
   EditablePreview,
@@ -25,10 +24,15 @@ export const Header = () => {
         </Text>
       </Flex>
       <Editable defaultValue="クリックしてタイトルを編集">
-        <EditablePreview fontSize="lg" maxW={960} noOfLines={1} />
+        <EditablePreview
+          fontSize="lg"
+          maxW={960}
+          noOfLines={1}
+          fontFamily="Noto Sans JP"
+        />
         <EditableInput w={480} />
       </Editable>
-      <Box w={256} />
+      <Flex w={256} alignItems="center" justifyContent="center"></Flex>
     </Flex>
   )
 }
