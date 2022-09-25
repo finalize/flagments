@@ -24,14 +24,14 @@ const Component = (props: CustomNodeProps) => {
       bg="white"
       color={color}
       borderColor={color}
-      borderWidth={1}
-      borderStyle={selected ? "dashed" : "solid"}
+      borderWidth={selected ? 1.5 : 1}
       justifyContent="center"
       position="relative"
       px={8}
       py={2}
       rounded="md"
       w={200}
+      _active={{ cursor: "grabbing" }}
     >
       <Text fontSize="xs" textAlign="center">
         {label}
