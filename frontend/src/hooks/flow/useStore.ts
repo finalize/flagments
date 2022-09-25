@@ -24,14 +24,23 @@ type State = {
   setTargetEdge: (id: string) => void
   resetTargetNode: () => void
   resetTargetEdge: () => void
-  // nodes
-  addNode: (node: CustomNode) => void
+  getNode: () => CustomNode | undefined
+  getEdge: () => Edge | undefined
   removeNode: (id?: string) => void
+  removeEdge: (id?: string) => void
+  // node
+  addNode: (node: CustomNode) => void
   onChangeLabel: (value: string) => void
   onChangeDescription: (value: string) => void
   onChangeHandle: (handles: Position[]) => void
   onChangeColor: (value: string) => void
-  getNode: () => CustomNode | undefined
+  // edge
+  onChangeEdgeLabel: (value?: string) => void
+  onChangeEdgeType: (value: string) => void
+  onChangeEdgeStrokeColor: (value: string) => void
+  onChangeEdgeLabelColor: (value: string) => void
+  onChangeEdgeLabelBgColor: (value: string) => void
+  onChangeEdgeAnimation: (value: boolean) => void
   // optional
   targetNode?: {
     id: string
@@ -45,8 +54,13 @@ export const useStore = create<State>((set, get) => ({
   nodes: [],
   edges: [],
   onConnect: (connection: Connection) => {
+    const edges = addEdge({ ...connection, selected: true }, get().edges)
+    const edge = edges.at(-1)
+    if (edge) {
+      get().setTargetEdge(edge.id)
+    }
     set({
-      edges: addEdge(connection, get().edges),
+      edges,
     })
   },
   onNodesChange: (changes) => {
@@ -66,11 +80,14 @@ export const useStore = create<State>((set, get) => ({
       }
       return { ...n, selected: false }
     })
+    const edges = get().edges.map((n) => ({ ...n, selected: false }))
     set({
       nodes,
+      edges,
       targetNode: {
         id,
       },
+      targetEdge: undefined,
     })
   },
   setTargetEdge: (id) => {
@@ -80,13 +97,42 @@ export const useStore = create<State>((set, get) => ({
       }
       return { ...n, selected: false }
     })
-    set({ edges, targetEdge: { id } })
+    const nodes = get().nodes.map((n) => ({ ...n, selected: false }))
+    set({ edges, nodes, targetEdge: { id }, targetNode: undefined })
   },
   resetTargetNode: () => {
     set({ targetNode: undefined })
   },
   resetTargetEdge: () => {
     set({ targetEdge: undefined })
+  },
+  getNode: () => {
+    const id = get().targetNode?.id
+    if (id === undefined) return
+
+    return get().nodes.find((node) => node.id === id)
+  },
+  getEdge: () => {
+    const id = get().targetEdge?.id
+    if (id === undefined) return
+
+    return get().edges.find((edge) => edge.id === id)
+  },
+  removeNode: (nodeId) => {
+    const id = nodeId ?? get().targetNode?.id
+    if (id === undefined) return
+    set({
+      nodes: applyNodeChanges([{ id, type: "remove" }], get().nodes),
+      targetNode: undefined,
+    })
+  },
+  removeEdge: (edgeId) => {
+    const id = edgeId ?? get().targetEdge?.id
+    if (id === undefined) return
+    set({
+      edges: applyEdgeChanges([{ id, type: "remove" }], get().edges),
+      targetEdge: undefined,
+    })
   },
   addNode: (node) => {
     const nds = get().nodes.map((n) => ({ ...n, selected: false }))
@@ -98,14 +144,6 @@ export const useStore = create<State>((set, get) => ({
       targetNode: {
         id: node.id,
       },
-    })
-  },
-  removeNode: (nodeId) => {
-    const id = nodeId ?? get().targetNode?.id
-    if (id === undefined) return
-    set({
-      nodes: applyNodeChanges([{ id, type: "remove" }], get().nodes),
-      targetNode: undefined,
     })
   },
   onChangeLabel: (value) => {
@@ -176,11 +214,107 @@ export const useStore = create<State>((set, get) => ({
       }),
     })
   },
-  getNode: () => {
-    const id = get().targetNode?.id
+  onChangeEdgeLabel: (value) => {
+    const id = get().targetEdge?.id
     if (id === undefined) return
 
-    return get().nodes.find((node) => node.id === id)
+    set({
+      edges: get().edges.map((edge) => {
+        if (edge.id === id) {
+          return {
+            ...edge,
+            label: value,
+          }
+        }
+
+        return edge
+      }),
+    })
+  },
+  onChangeEdgeType: (value) => {
+    const id = get().targetEdge?.id
+    if (id === undefined) return
+
+    set({
+      edges: get().edges.map((edge) => {
+        if (edge.id === id) {
+          return {
+            ...edge,
+            type: value,
+          }
+        }
+
+        return edge
+      }),
+    })
+  },
+  onChangeEdgeLabelColor: (value) => {
+    const id = get().targetEdge?.id
+    if (id === undefined) return
+
+    set({
+      edges: get().edges.map((edge) => {
+        if (edge.id === id) {
+          return {
+            ...edge,
+            labelStyle: { fill: value },
+          }
+        }
+
+        return edge
+      }),
+    })
+  },
+  onChangeEdgeLabelBgColor: (value) => {
+    const id = get().targetEdge?.id
+    if (id === undefined) return
+
+    set({
+      edges: get().edges.map((edge) => {
+        if (edge.id === id) {
+          return {
+            ...edge,
+            labelBgStyle: { fill: value },
+          }
+        }
+
+        return edge
+      }),
+    })
+  },
+  onChangeEdgeStrokeColor: (value) => {
+    const id = get().targetEdge?.id
+    if (id === undefined) return
+
+    set({
+      edges: get().edges.map((edge) => {
+        if (edge.id === id) {
+          return {
+            ...edge,
+            style: { stroke: value },
+          }
+        }
+
+        return edge
+      }),
+    })
+  },
+  onChangeEdgeAnimation: (value) => {
+    const id = get().targetEdge?.id
+    if (id === undefined) return
+
+    set({
+      edges: get().edges.map((edge) => {
+        if (edge.id === id) {
+          return {
+            ...edge,
+            animated: value,
+          }
+        }
+
+        return edge
+      }),
+    })
   },
   targetNode: undefined,
   targetEdge: undefined,
