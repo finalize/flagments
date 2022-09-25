@@ -16,9 +16,11 @@ export const SecondarySidebar: FC<Props> = ({ isVisibleHeader }) => (
     borderLeftWidth={1}
     overflowY="scroll"
     w="full"
-    pt={isVisibleHeader ? 0 : 12}
     fontFamily="Noto Sans JP"
   >
+    {!isVisibleHeader && (
+      <Box h={12} borderColor="gray.200" borderBottomWidth={1} />
+    )}
     <Tabs />
   </Box>
 )
