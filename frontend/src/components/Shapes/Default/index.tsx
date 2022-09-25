@@ -26,6 +26,7 @@ export const Default: FC<Props> = ({ shape }) => {
       h={9}
       opacity={0.999}
       onDragStart={(event) => onDragStart(event, shape)}
+      cursor="grab"
       draggable
     />
   )
