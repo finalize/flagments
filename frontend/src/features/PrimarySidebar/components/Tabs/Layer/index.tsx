@@ -9,8 +9,8 @@ export const LayerTab = () => {
 
   return (
     <Flex flexDirection="column">
-      <Box py={2} borderColor="gray.200" borderBottomWidth={1}>
-        <Text fontWeight={700} fontSize="xs" ml={4} mb={1}>
+      <Box borderColor="gray.200" borderBottomWidth={1}>
+        <Text fontWeight={700} fontSize="xs" ml={2} my={2}>
           ノード
         </Text>
         {nodes.map((node, index) => (
@@ -38,8 +38,8 @@ export const LayerTab = () => {
           </Box>
         ))}
       </Box>
-      <Box py={2} borderColor="gray.200" borderBottomWidth={1}>
-        <Text fontWeight={700} fontSize="xs" ml={4} mb={1}>
+      <Box borderColor="gray.200" borderBottomWidth={1}>
+        <Text fontWeight={700} fontSize="xs" ml={2} my={2}>
           ベクター
         </Text>
         {edges.map((edge, index) => (
