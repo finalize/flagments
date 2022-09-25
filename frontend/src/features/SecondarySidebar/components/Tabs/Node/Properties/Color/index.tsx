@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { ColorPalette } from "@/components/ColorPalette"
 import { useStore } from "@/hooks/flow/useStore"
 
-import { Container } from "../Container"
+import { Container } from "../../Container"
 
 export const Color = () => {
   const { onChangeColor, getNode, targetNode } = useStore((state) => state)

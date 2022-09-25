@@ -3,7 +3,7 @@ import { ChangeEventHandler, useEffect, useState } from "react"
 
 import { useStore } from "@/hooks/flow/useStore"
 
-import { Container } from "../Container"
+import { Container } from "../../Container"
 
 export const Label = () => {
   const { onChangeLabel, getNode, targetNode } = useStore((state) => state)

@@ -4,7 +4,7 @@ import { Position } from "react-flow-renderer"
 
 import { useStore } from "@/hooks/flow/useStore"
 
-import { Container } from "../Container"
+import { Container } from "../../Container"
 
 export const Handle = () => {
   const { onChangeHandle, getNode, targetNode } = useStore((state) => state)
