@@ -16,8 +16,10 @@ export const Tabs = () => {
 
   if (targetEdge === undefined && targetNode === undefined) return null
 
+  const defaultIndex = targetEdge ? 1 : targetNode ? 0 : undefined
+
   return (
-    <ChakraTabs isFitted>
+    <ChakraTabs isFitted index={defaultIndex}>
       <TabList>
         <Tab>ノード</Tab>
         <Tab>ベクター</Tab>
