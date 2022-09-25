@@ -11,17 +11,13 @@ import ReactFlow, {
   NodeMouseHandler,
 } from "react-flow-renderer"
 
-import { CustomEdge, CustomNode } from "@/components"
+import { CustomNode } from "@/components"
 import { useStore } from "@/hooks/flow/useStore"
 
 import { useFlow } from "./hooks"
 
 const nodeTypes = {
   custom: CustomNode,
-}
-
-const edgeTypes = {
-  custom: CustomEdge,
 }
 
 export const Flow = () => {
@@ -66,7 +62,6 @@ export const Flow = () => {
         onNodeClick={onNodeClick}
         onNodeDragStop={(_, { id }) => setTargetNode(id)}
         edges={edges}
-        edgeTypes={edgeTypes}
         onEdgesChange={onEdgesChange}
         onEdgeClick={onEdgeClick}
         onConnect={onConnect}

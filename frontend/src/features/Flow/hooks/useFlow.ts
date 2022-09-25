@@ -53,7 +53,7 @@ export const useFlow = ({ reactFlowWrapper }: Args) => {
         type: "custom",
         position,
         selected: true,
-        data: { label: "", handles: [], color: Colors.blue[400] },
+        data: { label: "", handles: [], color: Colors.black[400] },
       }
 
       addNode(node)
