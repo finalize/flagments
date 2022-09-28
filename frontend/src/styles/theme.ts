@@ -16,8 +16,11 @@ export const Colors = {
     400: "#444444",
   },
   gray: {
-    300: "#CBD5E0",
-    400: "#A0AEC0",
+    50: "#f9f9fa",
+    100: "#eceeef",
+    200: "#dee1e3",
+    300: "#cfd3d7",
+    400: "#bfc5c9",
   },
   red: {
     300: "#FC8181",
