@@ -2,10 +2,6 @@ import { Colors } from "@/styles/theme"
 
 export const colors = [
   {
-    name: Colors.blue[400],
-    color: Colors.blue[400],
-  },
-  {
     name: Colors.red[400],
     color: Colors.red[400],
   },
@@ -22,8 +18,16 @@ export const colors = [
     color: Colors.green[400],
   },
   {
+    name: Colors.blue[400],
+    color: Colors.blue[400],
+  },
+  {
     name: Colors.cyan[400],
     color: Colors.cyan[400],
+  },
+  {
+    name: Colors.indigo[400],
+    color: Colors.indigo[400],
   },
   {
     name: Colors.purple[400],
@@ -34,11 +38,11 @@ export const colors = [
     color: Colors.pink[400],
   },
   {
-    name: Colors.black[400],
-    color: Colors.black[400],
-  },
-  {
     name: Colors.gray[400],
     color: Colors.gray[400],
+  },
+  {
+    name: Colors.black[400],
+    color: Colors.black[400],
   },
 ]

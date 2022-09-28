@@ -15,7 +15,7 @@ export const ColorPalette = ({ value, onChange }: Props) => {
   })
 
   return (
-    <Grid {...getRootProps()} templateColumns="repeat(5, 1fr)" gap={4}>
+    <Grid {...getRootProps()} templateColumns="repeat(6, 1fr)" gap={4}>
       {colors.map(({ name, color }) => {
         return (
           <CustomRadio

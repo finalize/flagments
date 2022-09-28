@@ -16,9 +16,10 @@ export const CustomRadio = ({ color, ...radioProps }: Props) => {
         borderColor={state.isChecked ? color : "transparent"}
         borderWidth={4}
         backgroundColor={state.isChecked ? "white" : color}
-        w={8}
-        h={8}
+        w={6}
+        h={6}
         rounded="full"
+        mx="auto"
       />
     </FormLabel>
   )
