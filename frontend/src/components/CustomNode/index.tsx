@@ -34,7 +34,7 @@ const Component = (props: CustomNodeProps) => {
       _active={{ cursor: "grabbing" }}
     >
       <Text fontSize="xs" textAlign="center">
-        {label}
+        {label === "" ? "ラベルなし" : label}
       </Text>
       {handles?.map((position) => (
         <Handle
