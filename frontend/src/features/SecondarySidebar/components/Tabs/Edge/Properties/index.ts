@@ -1,4 +1,5 @@
 export { Animation } from "./Animation"
+export { Deletion } from "./Deletion"
 export { Label } from "./Label"
 export { LabelBgColor } from "./LabelBgColor"
 export { LabelColor } from "./LabelColor"

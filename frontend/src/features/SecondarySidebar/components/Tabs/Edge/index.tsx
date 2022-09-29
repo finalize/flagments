@@ -1,10 +1,6 @@
-import { Box, Button } from "@chakra-ui/react"
-import { useCallback } from "react"
-
-import { useStore } from "@/hooks/flow/useStore"
-
 import {
   Animation,
+  Deletion,
   Label,
   LabelBgColor,
   LabelColor,
@@ -13,12 +9,6 @@ import {
 } from "./Properties"
 
 export const EdgeTab = () => {
-  const { removeEdge } = useStore((state) => state)
-
-  const onClick = useCallback(() => {
-    removeEdge()
-  }, [removeEdge])
-
   return (
     <>
       <Label />
@@ -27,11 +17,7 @@ export const EdgeTab = () => {
       <Type />
       <Animation />
       <StrokeColor />
-      <Box p={4}>
-        <Button variant="ghost" color="red.500" w="full" onClick={onClick}>
-          削除
-        </Button>
-      </Box>
+      <Deletion />
     </>
   )
 }
