@@ -12,7 +12,8 @@ import { EdgeTab } from "./Edge"
 import { NodeTab } from "./Node"
 
 export const Tabs = () => {
-  const { targetEdge, targetNode } = useStore((state) => state)
+  const targetEdge = useStore(({ targetEdge }) => targetEdge)
+  const targetNode = useStore(({ targetNode }) => targetNode)
 
   if (targetEdge === undefined && targetNode === undefined) return null
 
@@ -28,9 +29,7 @@ export const Tabs = () => {
         <TabPanel p={0}>
           <NodeTab />
         </TabPanel>
-        <TabPanel p={0}>
-          <EdgeTab />
-        </TabPanel>
+        <TabPanel p={0}>{/* <EdgeTab /> */}</TabPanel>
       </TabPanels>
     </ChakraTabs>
   )

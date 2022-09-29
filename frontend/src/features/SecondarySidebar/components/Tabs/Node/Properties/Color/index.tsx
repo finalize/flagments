@@ -1,23 +1,25 @@
-import { useEffect, useState } from "react"
+import { memo, useEffect, useState } from "react"
 
 import { ColorPalette } from "@/components/ColorPalette"
 import { useStore } from "@/hooks/flow/useStore"
 
 import { Container } from "../../Container"
 
-export const Color = () => {
-  const { onChangeColor, getNode, targetNode } = useStore((state) => state)
-  const node = getNode()
+const Component = () => {
+  const onChangeColor = useStore(({ onChangeColor }) => onChangeColor)
+  const targetNode = useStore(({ targetNode }) => targetNode)
 
-  const [color, setColor] = useState(node?.data.color ?? "")
+  const [color, setColor] = useState(targetNode?.data.color ?? "")
 
   const onChange = (value: string) => {
+    setColor(value)
     onChangeColor(value)
   }
 
   useEffect(() => {
-    setColor(node?.data.color ?? "")
-  }, [targetNode, node])
+    setColor(targetNode?.data.color ?? "")
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [targetNode])
 
   return (
     <Container title="色">
@@ -25,3 +27,5 @@ export const Color = () => {
     </Container>
   )
 }
+
+export const Color = memo(Component)

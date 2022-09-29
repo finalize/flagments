@@ -1,29 +1,26 @@
 import { Input } from "@chakra-ui/react"
-import { ChangeEventHandler, useEffect, useState } from "react"
+import { ChangeEventHandler, memo, useEffect, useState } from "react"
 
 import { useStore } from "@/hooks/flow/useStore"
 
 import { Container } from "../../Container"
 
-export const Label = () => {
-  const { onChangeLabel, getNode, targetNode } = useStore((state) => state)
-  const node = getNode()
+const Component = () => {
+  const onChangeLabel = useStore(({ onChangeLabel }) => onChangeLabel)
+  const targetNode = useStore(({ targetNode }) => targetNode)
 
-  const [value, setValue] = useState(node?.data.label ?? "")
+  const [value, setValue] = useState(targetNode?.data.label ?? "")
 
   const onChange: ChangeEventHandler<HTMLInputElement> = ({
     target: { value },
   }) => {
     setValue(value)
+    onChangeLabel(value)
   }
 
   useEffect(() => {
-    onChangeLabel(value)
-  }, [value, onChangeLabel])
-
-  useEffect(() => {
-    setValue(node?.data.label ?? "")
-  }, [targetNode, node])
+    setValue(targetNode?.data.label ?? "")
+  }, [targetNode])
 
   return (
     <Container title="ラベル">
@@ -31,3 +28,5 @@ export const Label = () => {
     </Container>
   )
 }
+
+export const Label = memo(Component)

@@ -1,4 +1,5 @@
 export { Color } from "./Color"
+export { Deletion } from "./Deletion"
 export { Description } from "./Description"
 export { Handle } from "./Handle"
 export { Label } from "./Label"

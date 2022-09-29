@@ -1,17 +1,17 @@
 import { Textarea } from "@chakra-ui/react"
-import { ChangeEventHandler, useEffect, useState } from "react"
+import { ChangeEventHandler, memo, useEffect, useState } from "react"
 
 import { useStore } from "@/hooks/flow/useStore"
 
 import { Container } from "../../Container"
 
-export const Description = () => {
-  const { onChangeDescription, getNode, targetNode } = useStore(
-    (state) => state
+const Component = () => {
+  const onChangeDescription = useStore(
+    ({ onChangeDescription }) => onChangeDescription
   )
-  const node = getNode()
+  const targetNode = useStore(({ targetNode }) => targetNode)
 
-  const [value, setValue] = useState(node?.data.description ?? "")
+  const [value, setValue] = useState(targetNode?.data.description ?? "")
 
   const onChange: ChangeEventHandler<HTMLTextAreaElement> = ({
     target: { value },
@@ -23,13 +23,11 @@ export const Description = () => {
     onChangeDescription(value)
   }, [value, onChangeDescription])
 
-  useEffect(() => {
-    setValue(node?.data.description ?? "")
-  }, [targetNode, node])
-
   return (
     <Container title="説明">
       <Textarea value={value} placeholder="説明を入力" onChange={onChange} />
     </Container>
   )
 }
+
+export const Description = memo(Component)

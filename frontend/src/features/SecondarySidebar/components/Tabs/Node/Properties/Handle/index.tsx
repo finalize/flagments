@@ -1,37 +1,35 @@
 import { Flex, Switch, Text } from "@chakra-ui/react"
-import { useEffect, useState } from "react"
+import { memo, useEffect, useState } from "react"
 import { Position } from "react-flow-renderer"
 
 import { useStore } from "@/hooks/flow/useStore"
 
 import { Container } from "../../Container"
 
-export const Handle = () => {
-  const { onChangeHandle, getNode, targetNode } = useStore((state) => state)
-  const node = getNode()
-  const [handles, setHandles] = useState(node?.data.handles ?? [])
+const Component = () => {
+  const onChangeHandle = useStore(({ onChangeHandle }) => onChangeHandle)
+  const targetNode = useStore(({ targetNode }) => targetNode)
+  const [handles, setHandles] = useState(targetNode?.data.handles ?? [])
 
   const onSetHandle = (position: Position) => {
     const exists = handles.includes(position)
 
+    let newHandles: Position[] = []
     if (exists) {
-      setHandles(
-        handles.filter((handle) => {
-          return handle !== position
-        })
-      )
+      newHandles = handles.filter((handle) => {
+        return handle !== position
+      })
     } else {
-      setHandles(handles.concat(position))
+      newHandles = handles.concat(position)
     }
+
+    setHandles(newHandles)
+    onChangeHandle(newHandles)
   }
 
   useEffect(() => {
-    onChangeHandle(handles)
-  }, [handles, onChangeHandle])
-
-  useEffect(() => {
-    setHandles(node?.data.handles ?? [])
-  }, [targetNode, node])
+    setHandles(targetNode?.data.handles ?? [])
+  }, [targetNode])
 
   return (
     <Container title="ハンドル">
@@ -66,3 +64,5 @@ export const Handle = () => {
     </Container>
   )
 }
+
+export const Handle = memo(Component)
