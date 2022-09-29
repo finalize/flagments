@@ -42,17 +42,63 @@ type State = {
   onChangeEdgeLabelBgColor: (value: string) => void
   onChangeEdgeAnimation: (value: boolean) => void
   // optional
-  targetNode?: {
-    id: string
-  }
+  targetNode?: CustomNode
   targetEdge?: {
     id: string
   }
 }
 
 export const useStore = create<State>((set, get) => ({
-  nodes: [],
-  edges: [],
+  nodes: [
+    {
+      id: "80786501365089620262",
+      type: "custom",
+      position: {
+        x: 514.758529755277,
+        y: 174.35445717990376,
+      },
+      selected: false,
+      data: {
+        label: "",
+        handles: [Position.Bottom],
+        color: "#444444",
+        description: "",
+      },
+      width: 200,
+      height: 37,
+      positionAbsolute: {
+        x: 514.758529755277,
+        y: 174.35445717990376,
+      },
+      dragging: false,
+    },
+    {
+      id: "42055810397018776869",
+      type: "custom",
+      position: {
+        x: 584.758529755277,
+        y: 339.35445717990376,
+      },
+      selected: false,
+      data: {
+        label: "",
+        handles: [Position.Top],
+        color: "#444444",
+      },
+      width: 200,
+      height: 36,
+    },
+  ],
+  edges: [
+    {
+      source: "80786501365089620262",
+      sourceHandle: "bottom",
+      target: "42055810397018776869",
+      targetHandle: "top",
+      selected: true,
+      id: "reactflow__edge-80786501365089620262bottom-42055810397018776869top",
+    },
+  ],
   onConnect: (connection: Connection) => {
     const edges = addEdge({ ...connection, selected: true }, get().edges)
     const edge = edges.at(-1)
@@ -62,6 +108,7 @@ export const useStore = create<State>((set, get) => ({
     set({
       edges,
     })
+    console.log(get().edges, get().nodes)
   },
   onNodesChange: (changes) => {
     set({
@@ -74,19 +121,19 @@ export const useStore = create<State>((set, get) => ({
     })
   },
   setTargetNode: (id) => {
-    const nodes = get().nodes.map((n) => {
-      if (n.id === id) {
-        return { ...n, selected: true }
+    let targetNode: CustomNode | undefined
+    const nodes = get().nodes.map((node) => {
+      if (node.id === id) {
+        targetNode = node
+        return { ...node, selected: true }
       }
-      return { ...n, selected: false }
+      return { ...node, selected: false }
     })
-    const edges = get().edges.map((n) => ({ ...n, selected: false }))
+    const edges = get().edges.map((edge) => ({ ...edge, selected: false }))
     set({
       nodes,
       edges,
-      targetNode: {
-        id,
-      },
+      targetNode,
       targetEdge: undefined,
     })
   },
@@ -136,14 +183,13 @@ export const useStore = create<State>((set, get) => ({
   },
   addNode: (node) => {
     const nds = get().nodes.map((n) => ({ ...n, selected: false }))
+    const newNode = {
+      ...node,
+      data: { ...node.data, label: "" },
+    }
     set({
-      nodes: [
-        ...nds,
-        { ...node, data: { ...node.data, label: `ノード ${nds.length + 1}` } },
-      ],
-      targetNode: {
-        id: node.id,
-      },
+      nodes: [...nds, newNode],
+      targetNode: newNode,
     })
   },
   onChangeLabel: (value) => {
