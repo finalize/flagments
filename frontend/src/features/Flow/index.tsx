@@ -13,6 +13,7 @@ import ReactFlow, {
 
 import { CustomNode } from "@/components"
 import { useStore } from "@/hooks/flow/useStore"
+import { Colors } from "@/styles/theme"
 
 import { useFlow } from "./hooks"
 
@@ -76,7 +77,7 @@ export const Flow = () => {
             <StarIcon />
           </ControlButton>
         </Controls>
-        <Background />
+        <Background style={{ background: Colors.gray[100] }} size={0} />
         {showMinimap && <MiniMap />}
       </ReactFlow>
     </Box>
